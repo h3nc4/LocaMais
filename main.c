@@ -10,54 +10,6 @@
 #define SIZE__CODE_ALL 21
 
 
-/******************************** INFO IMPORTANTE *************************************
-
-    cliente[k].nome sempre recebera EOF ao final do arquivo e vetor cliente
-    logLocacao[k].devolucao sempre recebera EOF ao final do arquivo e vetor loglocacao
-    veiculo[k].descricao sempre recebera EOF ao final do arquivo e vetor veiculo
-
-***************************************************************************************/
-
-
-/* Possiveis arquivos a serem usados
-FILE *pLerCliente = fopen("CLENTES.csv", "r"),
-     *pSalvarClientes = fopen("CLENTES.csv", "w"),
-     *pLerLogLocacao = fopen("LOCACAO.csv", "r"),
-     *pSalvarLogLocacao = fopen("LOCACAO.csv", "w"),
-     *pLerVeiculo = fopen("VEICULO.csv", "r"),
-     *pSalvarVeiculos = fopen("VEICULO.csv", "w");
-
-    fclose(pLerCliente);
-    fclose(pAdicionarCliente);
-    fclose(pLogLocacao);
-    fclose(pLerVeiculo);
-    fclose(pAdicionarVeiculo);
-    fclose(pSalvarVeiculos);
-
-    cliente[0] = iniCliente("Luquinhas", "31-99999-9999", "17409488241744112022", "rua da luz", "692", "casa", "Santa Lucia", "Belo Horizonte", "MG", "30.110-111");
-    cliente[1] = iniCliente("Ana Claras", "31-99999-9999", "15811391221745382022", "rua da luz", "692", "casa", "Santa Lucia", "Belo Horizonte", "MG", "30.110-112");
-    cliente[2] = iniCliente("Pedro Santos", "31-99999-9999", "08396876981745562022", "rua da luz", "692", "casa", "Santa Lucia", "Belo Horizonte", "MG", "30.110-113");
-    cliente[3] = iniCliente("Theodoro", "31-99999-9999", "98494529411746172022", "rua da luz", "692", "casa", "Santa Lucia", "Belo Horizonte", "MG", "30.110-114");
-    cliente[4] = iniCliente("Joaquim", "31-99999-9999", "13767741661746332022", "rua da luz", "692", "casa", "Santa Lucia", "Belo Horizonte", "MG", "30.110-115");
-    cliente[5] = iniCliente("Henrique", "31-99999-9999", "71221327291746472022", "rua da felicidade", "1000", "101", "Ana lucia", "Belo Horizonte", "MG", "12.345-123");
-    strcpy(cliente[6].nome, "EOF");
-struct sCliente iniCliente(char p1[], char p2[], char p3[], char p4[], char p5[], char p6[], char p7[], char p8[], char p9[], char p10[])
-{
-    tCliente n;
-    strcpy(n.nome, p1);
-    strcpy(n.telefone, p2);
-    strcpy(n.codigo, p3);
-    strcpy(n.endereco.rua, p4);
-    strcpy(n.endereco.numero, p5);
-    strcpy(n.endereco.complemento, p6);
-    strcpy(n.endereco.bairro, p7);
-    strcpy(n.endereco.cidade, p8);
-    strcpy(n.endereco.estado, p9);
-    strcpy(n.endereco.cep, p10);
-    return n;
-}
-    */
-
 // Estruturas do cliente.
 struct sEndereco
 {
@@ -561,3 +513,11 @@ main()
     }
     escreverVetor();
 }
+
+/******************************** INFO IMPORTANTE *************************************
+
+    cliente[k].nome sempre recebera EOF ao final do arquivo e vetor cliente
+    logLocacao[k].devolucao sempre recebera EOF ao final do arquivo e vetor loglocacao
+    veiculo[k].descricao sempre recebera EOF ao final do arquivo e vetor veiculo
+
+***************************************************************************************/
