@@ -34,7 +34,29 @@ FILE *pLerCliente = fopen("CLENTES.csv", "r"),
     fclose(pAdicionarVeiculo);
     fclose(pSalvarVeiculos);
 
-*/
+    cliente[0] = iniCliente("Luquinhas", "31-99999-9999", "17409488241744112022", "rua da luz", "692", "casa", "Santa Lucia", "Belo Horizonte", "MG", "30.110-111");
+    cliente[1] = iniCliente("Ana Claras", "31-99999-9999", "15811391221745382022", "rua da luz", "692", "casa", "Santa Lucia", "Belo Horizonte", "MG", "30.110-112");
+    cliente[2] = iniCliente("Pedro Santos", "31-99999-9999", "08396876981745562022", "rua da luz", "692", "casa", "Santa Lucia", "Belo Horizonte", "MG", "30.110-113");
+    cliente[3] = iniCliente("Theodoro", "31-99999-9999", "98494529411746172022", "rua da luz", "692", "casa", "Santa Lucia", "Belo Horizonte", "MG", "30.110-114");
+    cliente[4] = iniCliente("Joaquim", "31-99999-9999", "13767741661746332022", "rua da luz", "692", "casa", "Santa Lucia", "Belo Horizonte", "MG", "30.110-115");
+    cliente[5] = iniCliente("Henrique", "31-99999-9999", "71221327291746472022", "rua da felicidade", "1000", "101", "Ana lucia", "Belo Horizonte", "MG", "12.345-123");
+    strcpy(cliente[6].nome, "EOF");
+struct sCliente iniCliente(char p1[], char p2[], char p3[], char p4[], char p5[], char p6[], char p7[], char p8[], char p9[], char p10[])
+{
+    tCliente n;
+    strcpy(n.nome, p1);
+    strcpy(n.telefone, p2);
+    strcpy(n.codigo, p3);
+    strcpy(n.endereco.rua, p4);
+    strcpy(n.endereco.numero, p5);
+    strcpy(n.endereco.complemento, p6);
+    strcpy(n.endereco.bairro, p7);
+    strcpy(n.endereco.cidade, p8);
+    strcpy(n.endereco.estado, p9);
+    strcpy(n.endereco.cep, p10);
+    return n;
+}
+    */
 
 // Estruturas do cliente.
 struct sEndereco
@@ -97,24 +119,85 @@ struct sVeiculo
 typedef struct sVeiculo tVeiculo;
 tVeiculo veiculo[X__SIZE_VEHICLES];
 
+int pesquisarPorCodigoGlobal(int inpt)
+{
+    char code[21];
+    printf("\n Busque o codigo:");
+    gets(code);
+    // Cliente
+    if (inpt == 0)
+    for (int i = 0; i < X__SIZE_CLIENT && strcmp(cliente[i].nome, "EOF") != 0; i++)
+        if (strcasecmp(code, cliente[i].codigo) == 0)
+            return i;
+    // Locacao
+    if (inpt == 1)
+    for (int i = 0; i < X__SIZE_CLIENT && strcmp(cliente[i].nome, "EOF") != 0; i++)
+        if (strcasecmp(code, cliente[i].codigo) == 0)
+            return i;
+    // Veiculo
+    if (inpt == 2)
+    for (int i = 0; i < X__SIZE_CLIENT && strcmp(cliente[i].nome, "EOF") != 0; i++)
+        if (strcasecmp(code, cliente[i].codigo) == 0)
+            return i;
+    return -1;
+}
+
+void printCliente(tCliente p)
+{
+    printf("\n ***** Cliente *****");
+    printf("\n Nome: %s", p.nome);
+    printf("\n Tel: %s", p.telefone);
+    printf("\n Codigo: %s", p.codigo);
+    printf("\n Endereco:");
+    printf("\n Rua %s, %s, %s", p.endereco.rua, p.endereco.numero, p.endereco.complemento);
+    printf("\n %s, %s, %s", p.endereco.cidade, p.endereco.estado, p.endereco.cep);
+    printf("\n");
+}
+
+void printVeiculo(tVeiculo q)
+{
+    printf("\n ***** Veiculo *****");
+    printf("\n Modelo: %s", q.hardware.modelo);
+    printf("\n Descricao: %s", q.descricao);
+    printf("\n Codigo :%s", q.codigo);
+    printf("\n Cor: %s, Ocupacao: %s", q.hardware.cor, q.hardware.ocupacao);
+    printf("\n Diaria: %s, Placa: %s", q.diaria, q.hardware.placa);
+    if (q.status == 'n')
+        printf("\n Status: Em uso");
+    else
+        printf("\n Status: Livre");
+    printf("\n");
+}
+
+void printLog(tLog r)
+{
+    printf("\n ***** Log de vendas *****");
+    printf("\n Codigo: %s", r.codigo.locacao);
+    printf("\n Cliente: %s", r.codigo.cliente);
+    printf("\n Veiculo: %s", r.codigo.veiculo);
+    printf("\n Rua %s, %s, %s", r.devolucao, r.retirada, r.dias);
+    if (r.seguro == 'n')
+        printf("\n Seguro: Nao contratado");
+    else
+        printf("\n Seguro: Contratado");
+    printf("\n");
+}
+
 void switchComandosInterface(int p)
 {
     fflush(stdin);
     if (p == 1)
         addCliente();
     else if (p == 2)
-        printCliente(cliente[pesquisarPorCodigoCliente()]);
-}
-
-int pesquisarPorCodigoCliente()
-{
-    char code[21];
-    printf("\n Busque o codigo:");
-    gets(code);
-    for (int i = 0; i < X__SIZE_CLIENT && strcmp(cliente[i].nome, "EOF") != 0; i++)
-        if (strcasecmp(code, cliente[i].codigo) == 0)
-            return i;
-    return -1;
+        printCliente(cliente[pesquisarPorCodigoGlobal(0)]);
+    else if (p == 3)
+        addVeiculo();
+    else if (p == 4)
+        printVeiculo(veiculo[pesquisarPorCodigoGlobal(2)]);
+    else if (p == 5)
+        addLog();
+    else if (p == 6)
+        printLog(logLocacao[pesquisarPorCodigoGlobal(1)]);
 }
 
 int fimDeArquivoGlobal(int inp)
@@ -268,18 +351,6 @@ addVeiculo()
     veiculo[i] = p;
     strcpy(veiculo[i + 1].hardware.modelo, "EOF");
     printf("\n Veiculo %s incluido.", p.codigo);
-}
-
-void printCliente(tCliente p)
-{
-    printf("\n ***** Cliente *****");
-    printf("\n Nome:%s", p.nome);
-    printf("\n Tel:%s", p.telefone);
-    printf("\n Codigo:%s", p.codigo);
-    printf("\n Endereco:");
-    printf("\n Rua %s, %s, %s", p.endereco.rua, p.endereco.numero, p.endereco.complemento);
-    printf("\n %s, %s, %s", p.endereco.cidade, p.endereco.estado, p.endereco.cep);
-    printf("\n");
 }
 
 void carregaDadosDosArquivos()
