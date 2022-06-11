@@ -121,7 +121,7 @@ tVeiculo veiculo[X__SIZE_VEHICLES];
 
 int pesquisarPorCodigoGlobal(int inpt)
 {
-    char code[21];
+    char code[SIZE__CODE_ALL];
     printf("\n Busque o codigo:");
     gets(code);
     // Cliente
