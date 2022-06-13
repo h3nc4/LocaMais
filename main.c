@@ -9,7 +9,6 @@
 #define X__SIZE_SELLING_LOG 100
 #define SIZE__CODE_ALL 21
 
-
 // Estruturas do cliente.
 struct sEndereco
 {
@@ -43,6 +42,7 @@ typedef struct sCodigo tCodigo;
 struct sLog
 {
     tCodigo codigo;
+    char preco[7];
     char retirada[11];
     char devolucao[11];
     char seguro[2];
@@ -78,19 +78,19 @@ int pesquisarPorCodigoGlobal(int inpt)
     gets(code);
     // Cliente
     if (inpt == 0)
-    for (int i = 0; i < X__SIZE_CLIENT && strcmp(cliente[i].nome, "EOF") != 0; i++)
-        if (strcasecmp(code, cliente[i].codigo) == 0)
-            return i;
+        for (int i = 0; i < X__SIZE_CLIENT && strcmp(cliente[i].nome, "EOF") != 0; i++)
+            if (strcasecmp(code, cliente[i].codigo) == 0)
+                return i;
     // Locacao
     if (inpt == 1)
-    for (int i = 0; i < X__SIZE_CLIENT && strcmp(cliente[i].nome, "EOF") != 0; i++)
-        if (strcasecmp(code, cliente[i].codigo) == 0)
-            return i;
+        for (int i = 0; i < X__SIZE_CLIENT && strcmp(logLocacao[i].devolucao, "EOF") != 0; i++)
+            if (strcasecmp(code, logLocacao[i].codigo.locacao) == 0)
+                return i;
     // Veiculo
     if (inpt == 2)
-    for (int i = 0; i < X__SIZE_CLIENT && strcmp(cliente[i].nome, "EOF") != 0; i++)
-        if (strcasecmp(code, cliente[i].codigo) == 0)
-            return i;
+        for (int i = 0; i < X__SIZE_CLIENT && strcmp(veiculo[i].descricao, "EOF") != 0; i++)
+            if (strcasecmp(code, veiculo[i].codigo) == 0)
+                return i;
     return -1;
 }
 
@@ -171,7 +171,7 @@ int fimDeArquivoGlobal(int inp)
 
 void geradorDeCodigoGlobal(char codGerado[], int in)
 {
-    time_t now = time('\0');
+    time_t now = time(NULL);
     struct tm *pt = localtime(&now);
     // esta string de caracteres numericos e usada para preencher numeros aleatorios
     char num[] = "0123456789";
@@ -200,7 +200,7 @@ void geradorDeCodigoGlobal(char codGerado[], int in)
     codGerado[17] = '-';
     codGerado[18] = (pt->tm_year - 100 - pt->tm_year % 10) / 10 + '0';
     codGerado[19] = pt->tm_year % 10 + '0';
-    codGerado[20] = '\0';
+    codGerado[20] = NULL;
 }
 
 void addCliente()
@@ -241,13 +241,33 @@ devolucao(char inicio[11], char duracao[4], char fim[11])
 {
     // Inicializando ano em int
     int temp[3] = {(inicio[6] - '0') * 1000 + (inicio[7] - '0') * 100 + (inicio[8] - '0') * 10 + (inicio[9] - '0'),
-     (inicio[3] - '0') * 10 + (inicio[4] - '0'), (inicio[0] - '0') * 10 + (inicio[1] - '0')};
-    struct tm t = {.tm_year = temp[0] - 1900, .tm_mon = temp[1]-1, .tm_mday = temp[2]};
+                   (inicio[3] - '0') * 10 + (inicio[4] - '0'), (inicio[0] - '0') * 10 + (inicio[1] - '0')},
+        duracaoint = 0;
+    struct tm t = {.tm_year = temp[0] - 1900, .tm_mon = temp[1] - 1, .tm_mday = temp[2]};
     // Mudar data
-    t.tm_mday += 70;
+    duracaoint = atoi(duracao);
+    t.tm_mday += duracaoint;
     mktime(&t);
     // Escrever nova data formatada em string
     strftime(fim, 11, "%d/%m/%Y", &t);
+}
+
+calculaPreco(char veic[SIZE__CODE_ALL], char tofseguro[2], char fullduracao[4], char price[7])
+{
+    int inew, iend = -1, diariaint, fullduracaoint;
+    for (int inew = 0; inew < X__SIZE_VEHICLES && strcmp(veiculo[inew].descricao, "EOF") != 0; inew++)
+        if (strcasecmp(veic, veiculo[inew].codigo) == 0)
+        {
+            iend = inew;
+            inew = X__SIZE_SELLING_LOG;
+        }
+    veiculo[iend].diaria;
+    diariaint = atoi(veiculo[iend].diaria);
+    fullduracaoint = atoi(fullduracao);
+    diariaint = diariaint * fullduracaoint;
+    if (tofseguro[0] == 's')
+        diariaint = diariaint + 50;
+    itoa(diariaint, price, 7);
 }
 
 addLog()
@@ -269,6 +289,8 @@ addLog()
     scanf(" %[^\n]", &p.seguro);
     printf(" Codigo do veiculo: ");
     scanf("%s", &p.codigo.veiculo);
+    calculaPreco(p.codigo.veiculo, p.seguro, p.dias, p.preco);
+    printf(" O cliente pagara: %s", p.preco);
     printf(" Codigo do cliente: ");
     scanf(" %[^\n]", &p.codigo.cliente);
     int i = fimDeArquivoGlobal(1);
@@ -307,13 +329,14 @@ addVeiculo()
 
 void carregaDadosDosArquivos()
 {
-    FILE *pLerCliente = fopen("CLENTES.csv", "r"),*pLerLogLocacao = fopen("LOCACAO.csv", "r"),*pLerVeiculo = fopen("VEICULO.csv", "r");
+    FILE *pLerCliente = fopen("CLENTES.csv", "r"), *pLerLogLocacao = fopen("LOCACAO.csv", "r"), *pLerVeiculo = fopen("VEICULO.csv", "r");
     tCliente client;
     tVeiculo vehicle;
     tLog registro;
     char leitura[150], escrita[150];
     int outputFscanf, i = 0;
-    if (pLerCliente != '\0')
+
+    if (pLerCliente != NULL)
     {
         outputFscanf = fscanf(pLerCliente, "%s %[^\n]", &leitura, &escrita);
         while (outputFscanf != "EOF")
@@ -347,11 +370,12 @@ void carregaDadosDosArquivos()
                 strcpy(client.endereco.estado, escrita);
             else if (strcasecmp(leitura, "**Cep") == 0)
                 strcpy(client.endereco.cep, escrita);
-                // Le fim
+
+            // Le fim
             else if (strcasecmp(leitura, "FIM") == 0)
             {
                 cliente[i] = client;
-                i++;// i++ para mudar de registro
+                i++; // i++ para mudar de registro
             }
             outputFscanf = fscanf(pLerCliente, "%s %[^\n]", &leitura, &escrita);
         }
@@ -359,7 +383,8 @@ void carregaDadosDosArquivos()
         strcpy(cliente[i].nome, "EOF");
         fclose(pLerCliente);
     }
-    if (pLerLogLocacao != '\0')
+
+    if (pLerLogLocacao != NULL)
     {
         outputFscanf = fscanf(pLerLogLocacao, "%s %[^\n]", &leitura, &escrita);
         while (outputFscanf != "EOF")
@@ -374,14 +399,26 @@ void carregaDadosDosArquivos()
             // Le Devolucao
             else if (strcasecmp(leitura, "**Devolucao") == 0)
                 strcpy(registro.devolucao, escrita);
+            else if (strcasecmp(leitura, "**Seguro") == 0)
+                strcpy(registro.seguro, escrita);
+            else if (strcasecmp(leitura, "**Dias") == 0)
+                strcpy(registro.dias, escrita);
+            else if (strcasecmp(leitura, "**Retirada") == 0)
+                strcpy(registro.retirada, escrita);
+            else if (strcasecmp(leitura, "**Codigo") == 0)
+                strcpy(registro.codigo.locacao, escrita);
+            else if (strcasecmp(leitura, "**Cliente") == 0)
+                strcpy(registro.codigo.cliente, escrita);
+            else if (strcasecmp(leitura, "**Veiculo") == 0)
+                strcpy(registro.codigo.veiculo, escrita);
+            else if (strcasecmp(leitura, "**Preco") == 0)
+                strcpy(registro.preco, escrita);
 
-
-
-                // Le fim
+            // Le fim
             else if (strcasecmp(leitura, "FIM") == 0)
             {
                 logLocacao[i] = registro;
-                i++;// i++ para mudar de registro
+                i++; // i++ para mudar de registro
             }
             outputFscanf = fscanf(pLerLogLocacao, "%s %[^\n]", &leitura, &escrita);
         }
@@ -389,7 +426,8 @@ void carregaDadosDosArquivos()
         strcpy(logLocacao[i].devolucao, "EOF");
         fclose(pLerLogLocacao);
     }
-    if (pLerCliente != '\0')
+
+    if (pLerCliente != NULL)
     {
         outputFscanf = fscanf(pLerCliente, "%s %[^\n]", &leitura, &escrita);
         while (outputFscanf != "EOF")
@@ -404,16 +442,26 @@ void carregaDadosDosArquivos()
             // Le descricao
             else if (strcasecmp(leitura, "**Descricao") == 0)
                 strcpy(vehicle.descricao, escrita);
+            else if (strcasecmp(leitura, "**Codigo") == 0)
+                strcpy(vehicle.codigo, escrita);
+            else if (strcasecmp(leitura, "**Status") == 0)
+                strcpy(vehicle.status, escrita);
+            else if (strcasecmp(leitura, "**Diaria") == 0)
+                strcpy(vehicle.diaria, escrita);
+            else if (strcasecmp(leitura, "**Placa") == 0)
+                strcpy(vehicle.hardware.placa, escrita);
+            else if (strcasecmp(leitura, "**Modelo") == 0)
+                strcpy(vehicle.hardware.modelo, escrita);
+            else if (strcasecmp(leitura, "**Ocupacao") == 0)
+                strcpy(vehicle.hardware.ocupacao, escrita);
+            else if (strcasecmp(leitura, "**Cor") == 0)
+                strcpy(vehicle.hardware.cor, escrita);
 
-
-
-
-
-                // Le fim
+            // Le fim
             else if (strcasecmp(leitura, "FIM") == 0)
             {
                 veiculo[i] = vehicle;
-                i++;// i++ para mudar de registro
+                i++; // i++ para mudar de registro
             }
             outputFscanf = fscanf(pLerCliente, "%s %[^\n]", &leitura, &escrita);
         }
@@ -426,7 +474,7 @@ void carregaDadosDosArquivos()
 void escreverVetor()
 {
     FILE *pSalvarClientes = fopen("CLENTES.csv", "w");
-    if (pSalvarClientes != '\0')
+    if (pSalvarClientes != NULL)
     {
         for (int wCounter = 0; strcmp("EOF", cliente[wCounter].nome) != 0; wCounter++)
         {
@@ -448,7 +496,7 @@ void escreverVetor()
     }
     FILE *pSalvarLogLocacao = fopen("LOCACAO.csv", "w");
 
-    if (pSalvarLogLocacao != '\0')
+    if (pSalvarLogLocacao != NULL)
     {
         for (int wCounter = 0; strcmp("EOF", logLocacao[wCounter].devolucao) != 0; wCounter++)
         {
@@ -461,13 +509,14 @@ void escreverVetor()
             fprintf(pSalvarLogLocacao, "**Codigo %s\n", logLocacao[wCounter].codigo.locacao);
             fprintf(pSalvarLogLocacao, "**Cliente %s\n", logLocacao[wCounter].codigo.cliente);
             fprintf(pSalvarLogLocacao, "**Veiculo %s\n", logLocacao[wCounter].codigo.veiculo);
+            fprintf(pSalvarLogLocacao, "**Preco %s\n", logLocacao[wCounter].preco);
             fprintf(pSalvarLogLocacao, "FIM\n");
         }
         fclose(pSalvarLogLocacao);
     }
     FILE *pSalvarVeiculos = fopen("VEICULO.csv", "w");
 
-    if (pSalvarVeiculos != '\0')
+    if (pSalvarVeiculos != NULL)
     {
         for (int wCounter = 0; strcmp("EOF", veiculo[wCounter].descricao) != 0; wCounter++)
         {
@@ -489,7 +538,7 @@ void escreverVetor()
 
 main()
 {
-    srand((unsigned int)(time('\0')));
+    srand((unsigned int)(time(NULL)));
     int opcao = 0;
     while (opcao != 9)
     {
