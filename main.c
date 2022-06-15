@@ -183,7 +183,7 @@ void switchComandosInterface(int p)
     else if (p == 8)
         printTudo();
     else if (p == 9)
-        fidelilade();
+        fidelidade();
 }
 
 int fimDeArquivoGlobal(int inp)
@@ -286,22 +286,16 @@ void devolucao(char inicio[11], char duracao[4], char fim[11])
     strftime(fim, 11, "%d/%m/%Y", &t);
 }
 
-void calculaPreco(char veic[SIZE__CODE_ALL], char tofseguro[2], char fullduracao[4], char price[7])
+void calculaPreco(int point, char tofseguro[2], char fullduracao[4], char price[7])
 {
-    int inew, iend = -1, diariaint, fullduracaoint;
-    for (int inew = 0; inew < X__SIZE_VEHICLES && strcmp(veiculo[inew].descricao, "EOF") != 0; inew++)
-        if (strcasecmp(veic, veiculo[inew].codigo) == 0)
-        {
-            iend = inew;
-            inew = X__SIZE_SELLING_LOG;
-        }
-    veiculo[iend].diaria;
-    diariaint = atoi(veiculo[iend].diaria);
+    int diariaint, fullduracaoint;
+    veiculo[point].diaria;
+    diariaint = atoi(veiculo[point].diaria);
     fullduracaoint = atoi(fullduracao);
     diariaint = diariaint * fullduracaoint;
     if (tofseguro[0] == 's')
         diariaint = diariaint + 50;
-    itoa(diariaint, price, 7);
+    itoa(diariaint, price, 10);
 }
 
 void addLog()
@@ -311,19 +305,21 @@ void addLog()
     system("cls");
     // Preencher novo item
     printf("\n******* Incluir locacao *******");
-    int verificadorDeVeiculo = 0;
+    int verificadorDeVeiculo = 0, ponteiro=0;
     while (verificadorDeVeiculo == 0)
     {
         printf("\n Digite o codigo do veiculo: ");
         scanf("%s", &p.codigo.veiculo);
-        if (strcmp(veiculo[pesquisarPorCodigoVeiculo(p.codigo.veiculo)].status, "Livre") == 0)
+        ponteiro = pesquisarPorCodigoVeiculo(p.codigo.veiculo);
+        if (strcmp(veiculo[ponteiro].status, "Livre") == 0)
         {
             verificadorDeVeiculo = 1;
-            strcpy(veiculo[pesquisarPorCodigoVeiculo(p.codigo.veiculo)].status, "Em uso");
+            strcpy(veiculo[ponteiro].status, "Em uso");
         }
         else
             printf(" O veiculo nao esta livre para locacao.\n");
     }
+    printf("\n veiculo n %d\n", ponteiro);
     printf(" O veiculo esta livre para locacao.\n");
     strcpy(p.devolucaotof, "N");
     printf("\n\nDigite a data de retirada (DD/MM/AAAA): ");
@@ -336,9 +332,7 @@ void addLog()
     printf("\n Codigo: %s", p.codigo);
     printf("\n O seguro esta incluido? (s/n): ");
     scanf(" %[^\n]", &p.seguro);
-    printf(" Codigo do veiculo: ");
-    scanf("%s", &p.codigo.veiculo);
-    calculaPreco(p.codigo.veiculo, p.seguro, p.dias, p.preco);
+    calculaPreco(ponteiro, p.seguro, p.dias, p.preco);
     printf(" O cliente pagara: %s", p.preco);
     printf("\n Codigo do cliente: ");
     scanf(" %[^\n]", &p.codigo.cliente);
@@ -358,7 +352,7 @@ void fimLog()
     while (tof1 == 0)
     {
         logPointer = pesquisarPorCodigoGlobal(1);
-        if (stcmp(logLocacao[logPointer].retirada, "S") != 0)
+        if (strcmp(logLocacao[logPointer].retirada, "S") != 0)
             printf("\n Esta devolucao ja ocorreu");
         else
             tof1 = 1;
@@ -371,7 +365,7 @@ void fimLog()
     {
         printf(" Digite quantos dias que o cliente alugou: ");
         scanf(" %[^\n]", &logLocacao[logPointer].dias);
-        calculaPreco(logLocacao[logPointer].codigo.veiculo, logLocacao[logPointer].seguro, logLocacao[logPointer].dias, logLocacao[logPointer].preco);
+        calculaPreco(logPointer, logLocacao[logPointer].seguro, logLocacao[logPointer].dias, logLocacao[logPointer].preco);
     }
     printf(" Por favor, cobre %s reais do cliente", logLocacao[logPointer].preco);
     system("pause");
