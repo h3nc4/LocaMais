@@ -8,7 +8,10 @@
 #define X__SIZE_VEHICLES 100
 #define X__SIZE_SELLING_LOG 100
 #define SIZE__CODE_ALL 21
+
+// Contador global
 int i;
+
 // Estruturas do cliente.
 struct sEndereco
 {
@@ -77,22 +80,27 @@ int pesquisarPorCodigoGlobal(int inpt)
     char code[SIZE__CODE_ALL];
     printf("\n Busque o codigo:");
     gets(code);
-    // Cliente
-    if (inpt == 0)
-        for (i = 0; i < X__SIZE_CLIENT && strcmp(cliente[i].nome, "EOF") != 0; i++)
-            if (strcasecmp(code, cliente[i].codigo) == 0)
-                return i;
-    // Locacao
-    if (inpt == 1)
-        for (i = 0; i < X__SIZE_SELLING_LOG && strcmp(logLocacao[i].devolucao, "EOF") != 0; i++)
-            if (strcasecmp(code, logLocacao[i].codigo.locacao) == 0)
-                return i;
-    // Veiculo
-    if (inpt == 2)
-        for (i = 0; i < X__SIZE_VEHICLES && strcmp(veiculo[i].descricao, "EOF") != 0; i++)
-            if (strcasecmp(code, veiculo[i].codigo) == 0)
-                return i;
-    return -1;
+    while (i>=0)
+    {
+        // Cliente
+        if (inpt == 0)
+            for (i = 0; i < X__SIZE_CLIENT && strcmp(cliente[i].nome, "EOF") != 0; i++)
+                if (strcasecmp(code, cliente[i].codigo) == 0)
+                    return i;
+
+        // Locacao
+        if (inpt == 1)
+            for (i = 0; i < X__SIZE_SELLING_LOG && strcmp(logLocacao[i].devolucao, "EOF") != 0; i++)
+                if (strcasecmp(code, logLocacao[i].codigo.locacao) == 0)
+                    return i;
+
+        // Veiculo
+        if (inpt == 2)
+            for (i = 0; i < X__SIZE_VEHICLES && strcmp(veiculo[i].descricao, "EOF") != 0; i++)
+                if (strcasecmp(code, veiculo[i].codigo) == 0)
+                    return i;
+    printf("\n Codigo nao encontrado!");
+    }
 }
 
 int pesquisarPorCodigoVeiculo(char code[])
@@ -102,11 +110,13 @@ int pesquisarPorCodigoVeiculo(char code[])
             return i;
     return -1;
 }
+
 void printTudo()
 {
-    printf("\n Selecione o registro: \n 1.Clientes\n 2.Logs\n 3.Veiculos");
+    printf("\n 1.Clientes\n 2.Logs\n 3.Veiculos\n Selecione o registro: ");
     int choice = 0;
     scanf("%d", &choice);
+    system("cls");
     if (choice == 1)
         for (i = 0; strcmp("EOF", cliente[i].nome) != 0; i++)
             printCliente(cliente[i]);
@@ -117,6 +127,7 @@ void printTudo()
         for (i = 0; strcmp("EOF", veiculo[i].descricao) != 0; i++)
             printVeiculo(veiculo[i]);
 }
+
 void printCliente(tCliente p)
 {
     printf("\n ***** Cliente *****");
@@ -134,13 +145,10 @@ void printVeiculo(tVeiculo q)
     printf("\n ***** Veiculo *****");
     printf("\n Modelo: %s", q.hardware.modelo);
     printf("\n Descricao: %s", q.descricao);
-    printf("\n Codigo :%s", q.codigo);
+    printf("\n Codigo: %s", q.codigo);
     printf("\n Cor: %s, Ocupacao: %s", q.hardware.cor, q.hardware.ocupacao);
     printf("\n Diaria: %s, Placa: %s", q.diaria, q.hardware.placa);
-    if (q.status == 'n')
-        printf("\n Status: Em uso");
-    else
-        printf("\n Status: Livre");
+    printf("\n Status: %s", q.status);
     printf("\n");
 }
 
@@ -150,12 +158,16 @@ void printLog(tLog r)
     printf("\n Codigo: %s", r.codigo.locacao);
     printf("\n Cliente: %s", r.codigo.cliente);
     printf("\n Veiculo: %s", r.codigo.veiculo);
-    printf("\n Rua %s, %s, %s", r.devolucao, r.retirada, r.dias);
+    printf("\n Retirada: %s Devolucao: %s Dias: %s", r.retirada, r.devolucao, r.dias);
     printf("\n Devolvido? %s", r.devolucaotof);
-    if (r.seguro == 'n')
-        printf("\n Seguro: Nao contratado");
+    if (r.devolucaotof[0] == 'N')
+        printf("\n Ainda nao pago, total esperado: %s", r.preco);
     else
-        printf("\n Seguro: Contratado");
+        printf("\n Foram pagos %s reais", r.preco);
+    if (r.seguro[0] == 'n')
+        printf("\n Seguro nao contratado");
+    else
+        printf("\n Seguro Contratado");
     printf("\n");
 }
 
@@ -194,7 +206,7 @@ int fimDeArquivoGlobal(int inp)
                 return i;
     if (inp == 2)
         for (i = 0; i < X__SIZE_VEHICLES; i++)
-            if (strcasecmp(veiculo[i].hardware.modelo, "EOF") == 0)
+            if (strcasecmp(veiculo[i].descricao, "EOF") == 0)
                 return i;
     return -1;
 }
@@ -324,7 +336,7 @@ void addLog()
     printf("\n veiculo n %d\n", ponteiro);
     printf(" O veiculo esta livre para locacao.\n");
     strcpy(p.devolucaotof, "N");
-    printf("\n\nDigite a data de retirada (DD/MM/AAAA): ");
+    printf(" Digite a data de retirada (DD/MM/AAAA): ");
     scanf(" %[^\n]", &p.retirada);
     printf(" Digite quantos dias que o cliente deseja alugar: ");
     scanf(" %[^\n]", &p.dias);
@@ -422,8 +434,8 @@ void fidelidade()
     char code[SIZE__CODE_ALL];
     printf("\n Informe o codigo do cliente:");
     scanf("%s", &code);
-    int total = printarContar(code);
-    printf("\n No total, o cliente realizou %d alugueis", total);
+    int total = printarContar(code) * 10;
+    printf("\n Este cliente tem %d pontos", total);
 }
 
 void carregaDadosDosArquivos()
@@ -434,52 +446,52 @@ void carregaDadosDosArquivos()
     tCliente client;
     tVeiculo vehicle;
     tLog registro;
-    char leitura[150],
-        escrita[150];
-    int outputFscanf;
+    char type[150],
+        value[150];
+    int outScan;
     i = 0;
     if (pLerCliente != NULL)
     {
-        outputFscanf = fscanf(pLerCliente, "%s %[^\n]", &leitura, &escrita);
-        while (outputFscanf != EOF)
+        outScan = fscanf(pLerCliente, "%s %[^\n]", &type, &value);
+        while (outScan != EOF)
         {
             // Le o inicio de um registro
-            if (strcasecmp(leitura, "INICIO") == 0)
+            if (strcasecmp(type, "INICIO") == 0)
             {
                 strcpy(client.nome, "");
                 strcpy(client.codigo, "");
                 strcpy(client.telefone, "");
             }
             // Le nome
-            else if (strcasecmp(leitura, "**Nome") == 0)
-                strcpy(client.nome, escrita);
+            else if (strcasecmp(type, "Nome") == 0)
+                strcpy(client.nome, value);
             // Telefone
-            else if (strcasecmp(leitura, "**Telefone") == 0)
-                strcpy(client.telefone, escrita);
-            else if (strcasecmp(leitura, "**Codigo") == 0)
-                strcpy(client.codigo, escrita);
-            else if (strcasecmp(leitura, "**Rua") == 0)
-                strcpy(client.endereco.rua, escrita);
-            else if (strcasecmp(leitura, "**Nro") == 0)
-                strcpy(client.endereco.numero, escrita);
-            else if (strcasecmp(leitura, "**Comp") == 0)
-                strcpy(client.endereco.complemento, escrita);
-            else if (strcasecmp(leitura, "**Bairro") == 0)
-                strcpy(client.endereco.bairro, escrita);
-            else if (strcasecmp(leitura, "**Cidade") == 0)
-                strcpy(client.endereco.cidade, escrita);
-            else if (strcasecmp(leitura, "**Estado") == 0)
-                strcpy(client.endereco.estado, escrita);
-            else if (strcasecmp(leitura, "**Cep") == 0)
-                strcpy(client.endereco.cep, escrita);
+            else if (strcasecmp(type, "Telefone") == 0)
+                strcpy(client.telefone, value);
+            else if (strcasecmp(type, "Codigo") == 0)
+                strcpy(client.codigo, value);
+            else if (strcasecmp(type, "Rua") == 0)
+                strcpy(client.endereco.rua, value);
+            else if (strcasecmp(type, "Nro") == 0)
+                strcpy(client.endereco.numero, value);
+            else if (strcasecmp(type, "Comp") == 0)
+                strcpy(client.endereco.complemento, value);
+            else if (strcasecmp(type, "Bairro") == 0)
+                strcpy(client.endereco.bairro, value);
+            else if (strcasecmp(type, "Cidade") == 0)
+                strcpy(client.endereco.cidade, value);
+            else if (strcasecmp(type, "Estado") == 0)
+                strcpy(client.endereco.estado, value);
+            else if (strcasecmp(type, "Cep") == 0)
+                strcpy(client.endereco.cep, value);
 
             // Le fim
-            else if (strcasecmp(leitura, "FIM") == 0)
+            else if (strcasecmp(type, "FIM") == 0)
             {
                 cliente[i] = client;
                 i++; // i++ para mudar de registro
             }
-            outputFscanf = fscanf(pLerCliente, "%s %[^\n]", &leitura, &escrita);
+            outScan = fscanf(pLerCliente, "%s %[^\n]", &type, &value);
         }
         // Ao final, escreve o fim do arquivo
         strcpy(cliente[i].nome, "EOF");
@@ -489,43 +501,43 @@ void carregaDadosDosArquivos()
     if (pLerLogLocacao != NULL)
     {
         i = 0;
-        outputFscanf = fscanf(pLerLogLocacao, "%s %[^\n]", &leitura, &escrita);
-        while (outputFscanf != EOF)
+        outScan = fscanf(pLerLogLocacao, "%s %[^\n]", &type, &value);
+        while (outScan != EOF)
         {
             // Le o inicio de um registro
-            if (strcasecmp(leitura, "INICIO") == 0)
+            if (strcasecmp(type, "INICIO") == 0)
             {
                 strcpy(registro.devolucao, "");
                 strcpy(registro.seguro, "");
                 strcpy(registro.dias, "");
             }
             // Le Devolucao
-            else if (strcasecmp(leitura, "**Devolucao") == 0)
-                strcpy(registro.devolucao, escrita);
-            else if (strcasecmp(leitura, "**Seguro") == 0)
-                strcpy(registro.seguro, escrita);
-            else if (strcasecmp(leitura, "**Dias") == 0)
-                strcpy(registro.dias, escrita);
-            else if (strcasecmp(leitura, "**Retirada") == 0)
-                strcpy(registro.retirada, escrita);
-            else if (strcasecmp(leitura, "**Devolvido") == 0)
-                strcpy(registro.devolucaotof, escrita);
-            else if (strcasecmp(leitura, "**Codigo") == 0)
-                strcpy(registro.codigo.locacao, escrita);
-            else if (strcasecmp(leitura, "**Cliente") == 0)
-                strcpy(registro.codigo.cliente, escrita);
-            else if (strcasecmp(leitura, "**Veiculo") == 0)
-                strcpy(registro.codigo.veiculo, escrita);
-            else if (strcasecmp(leitura, "**Preco") == 0)
-                strcpy(registro.preco, escrita);
+            else if (strcasecmp(type, "Devolucao") == 0)
+                strcpy(registro.devolucao, value);
+            else if (strcasecmp(type, "Seguro") == 0)
+                strcpy(registro.seguro, value);
+            else if (strcasecmp(type, "Dias") == 0)
+                strcpy(registro.dias, value);
+            else if (strcasecmp(type, "Retirada") == 0)
+                strcpy(registro.retirada, value);
+            else if (strcasecmp(type, "Devolvido") == 0)
+                strcpy(registro.devolucaotof, value);
+            else if (strcasecmp(type, "Codigo") == 0)
+                strcpy(registro.codigo.locacao, value);
+            else if (strcasecmp(type, "Cliente") == 0)
+                strcpy(registro.codigo.cliente, value);
+            else if (strcasecmp(type, "Veiculo") == 0)
+                strcpy(registro.codigo.veiculo, value);
+            else if (strcasecmp(type, "Preco") == 0)
+                strcpy(registro.preco, value);
 
             // Le fim
-            else if (strcasecmp(leitura, "FIM") == 0)
+            else if (strcasecmp(type, "FIM") == 0)
             {
                 logLocacao[i] = registro;
                 i++; // i++ para mudar de registro
             }
-            outputFscanf = fscanf(pLerLogLocacao, "%s %[^\n]", &leitura, &escrita);
+            outScan = fscanf(pLerLogLocacao, "%s %[^\n]", &type, &value);
         }
         // Ao final, escreve o fim do arquivo
         strcpy(logLocacao[i].devolucao, "EOF");
@@ -535,41 +547,41 @@ void carregaDadosDosArquivos()
     if (pLerVeiculo != NULL)
     {
         i = 0;
-        outputFscanf = fscanf(pLerVeiculo, "%s %[^\n]", &leitura, &escrita);
-        while (outputFscanf != EOF)
+        outScan = fscanf(pLerVeiculo, "%s %[^\n]", &type, &value);
+        while (outScan != EOF)
         {
             // Le o inicio de um registro
-            if (strcasecmp(leitura, "INICIO") == 0)
+            if (strcasecmp(type, "INICIO") == 0)
             {
                 strcpy(vehicle.descricao, "");
                 strcpy(vehicle.codigo, "");
                 strcpy(vehicle.status, "");
             }
             // Le descricao
-            else if (strcasecmp(leitura, "**Descricao") == 0)
-                strcpy(vehicle.descricao, escrita);
-            else if (strcasecmp(leitura, "**Codigo") == 0)
-                strcpy(vehicle.codigo, escrita);
-            else if (strcasecmp(leitura, "**Status") == 0)
-                strcpy(vehicle.status, escrita);
-            else if (strcasecmp(leitura, "**Diaria") == 0)
-                strcpy(vehicle.diaria, escrita);
-            else if (strcasecmp(leitura, "**Placa") == 0)
-                strcpy(vehicle.hardware.placa, escrita);
-            else if (strcasecmp(leitura, "**Modelo") == 0)
-                strcpy(vehicle.hardware.modelo, escrita);
-            else if (strcasecmp(leitura, "**Ocupacao") == 0)
-                strcpy(vehicle.hardware.ocupacao, escrita);
-            else if (strcasecmp(leitura, "**Cor") == 0)
-                strcpy(vehicle.hardware.cor, escrita);
+            else if (strcasecmp(type, "Descricao") == 0)
+                strcpy(vehicle.descricao, value);
+            else if (strcasecmp(type, "Codigo") == 0)
+                strcpy(vehicle.codigo, value);
+            else if (strcasecmp(type, "Status") == 0)
+                strcpy(vehicle.status, value);
+            else if (strcasecmp(type, "Diaria") == 0)
+                strcpy(vehicle.diaria, value);
+            else if (strcasecmp(type, "Placa") == 0)
+                strcpy(vehicle.hardware.placa, value);
+            else if (strcasecmp(type, "Modelo") == 0)
+                strcpy(vehicle.hardware.modelo, value);
+            else if (strcasecmp(type, "Ocupacao") == 0)
+                strcpy(vehicle.hardware.ocupacao, value);
+            else if (strcasecmp(type, "Cor") == 0)
+                strcpy(vehicle.hardware.cor, value);
 
             // Le fim
-            else if (strcasecmp(leitura, "FIM") == 0)
+            else if (strcasecmp(type, "FIM") == 0)
             {
                 veiculo[i] = vehicle;
                 i++; // i++ para mudar de registro
             }
-            outputFscanf = fscanf(pLerVeiculo, "%s %[^\n]", &leitura, &escrita);
+            outScan = fscanf(pLerVeiculo, "%s %[^\n]", &type, &value);
         }
         // Ao final, escreve o fim do arquivo
         strcpy(veiculo[i].descricao, "EOF");
@@ -584,19 +596,18 @@ void escreverVetor()
     {
         for (i = 0; strcmp("EOF", cliente[i].nome) != 0; i++)
         {
-            printf("\n %d %s", i, cliente[i].nome);
-            fprintf(pSalvarClientes, "INICIO\n");
-            fprintf(pSalvarClientes, "**Nome %s\n", cliente[i].nome);
-            fprintf(pSalvarClientes, "**Codigo %s\n", cliente[i].codigo);
-            fprintf(pSalvarClientes, "**Telefone %s\n", cliente[i].telefone);
-            fprintf(pSalvarClientes, "**Rua %s\n", cliente[i].endereco.rua);
-            fprintf(pSalvarClientes, "**Nro %s\n", cliente[i].endereco.numero);
-            fprintf(pSalvarClientes, "**Comp %s\n", cliente[i].endereco.complemento);
-            fprintf(pSalvarClientes, "**Bairro %s\n", cliente[i].endereco.bairro);
-            fprintf(pSalvarClientes, "**Cidade %s\n", cliente[i].endereco.cidade);
-            fprintf(pSalvarClientes, "**Estado %s\n", cliente[i].endereco.estado);
-            fprintf(pSalvarClientes, "**Cep %s\n", cliente[i].endereco.cep);
-            fprintf(pSalvarClientes, "FIM\n");
+            fprintf(pSalvarClientes, "INICIO CLIENTE\n");
+            fprintf(pSalvarClientes, "Nome %s\n", cliente[i].nome);
+            fprintf(pSalvarClientes, "Codigo %s\n", cliente[i].codigo);
+            fprintf(pSalvarClientes, "Telefone %s\n", cliente[i].telefone);
+            fprintf(pSalvarClientes, "Rua %s\n", cliente[i].endereco.rua);
+            fprintf(pSalvarClientes, "Nro %s\n", cliente[i].endereco.numero);
+            fprintf(pSalvarClientes, "Comp %s\n", cliente[i].endereco.complemento);
+            fprintf(pSalvarClientes, "Bairro %s\n", cliente[i].endereco.bairro);
+            fprintf(pSalvarClientes, "Cidade %s\n", cliente[i].endereco.cidade);
+            fprintf(pSalvarClientes, "Estado %s\n", cliente[i].endereco.estado);
+            fprintf(pSalvarClientes, "Cep %s\n", cliente[i].endereco.cep);
+            fprintf(pSalvarClientes, "FIM CLIENTE\n");
         }
         fclose(pSalvarClientes);
     }
@@ -606,18 +617,17 @@ void escreverVetor()
     {
         for (i = 0; strcmp("EOF", logLocacao[i].devolucao) != 0; i++)
         {
-            printf("\n %d %s", i, logLocacao[i].devolucao);
-            fprintf(pSalvarLogLocacao, "INICIO\n");
-            fprintf(pSalvarLogLocacao, "**Devolucao %s\n", logLocacao[i].devolucao);
-            fprintf(pSalvarLogLocacao, "**Seguro %s\n", logLocacao[i].seguro);
-            fprintf(pSalvarLogLocacao, "**Dias %s\n", logLocacao[i].dias);
-            fprintf(pSalvarLogLocacao, "**Retirada %s\n", logLocacao[i].retirada);
-            fprintf(pSalvarLogLocacao, "**Devolvido %s\n", logLocacao[i].devolucaotof);
-            fprintf(pSalvarLogLocacao, "**Codigo %s\n", logLocacao[i].codigo.locacao);
-            fprintf(pSalvarLogLocacao, "**Cliente %s\n", logLocacao[i].codigo.cliente);
-            fprintf(pSalvarLogLocacao, "**Veiculo %s\n", logLocacao[i].codigo.veiculo);
-            fprintf(pSalvarLogLocacao, "**Preco %s\n", logLocacao[i].preco);
-            fprintf(pSalvarLogLocacao, "FIM\n");
+            fprintf(pSalvarLogLocacao, "INICIO LOCACAO\n");
+            fprintf(pSalvarLogLocacao, "Devolucao %s\n", logLocacao[i].devolucao);
+            fprintf(pSalvarLogLocacao, "Seguro %s\n", logLocacao[i].seguro);
+            fprintf(pSalvarLogLocacao, "Dias %s\n", logLocacao[i].dias);
+            fprintf(pSalvarLogLocacao, "Retirada %s\n", logLocacao[i].retirada);
+            fprintf(pSalvarLogLocacao, "Devolvido %s\n", logLocacao[i].devolucaotof);
+            fprintf(pSalvarLogLocacao, "Codigo %s\n", logLocacao[i].codigo.locacao);
+            fprintf(pSalvarLogLocacao, "Cliente %s\n", logLocacao[i].codigo.cliente);
+            fprintf(pSalvarLogLocacao, "Veiculo %s\n", logLocacao[i].codigo.veiculo);
+            fprintf(pSalvarLogLocacao, "Preco %s\n", logLocacao[i].preco);
+            fprintf(pSalvarLogLocacao, "FIM LOCACAO\n");
         }
         fclose(pSalvarLogLocacao);
     }
@@ -627,17 +637,16 @@ void escreverVetor()
     {
         for (i = 0; strcmp("EOF", veiculo[i].descricao) != 0; i++)
         {
-            printf("\n %d %s", i, veiculo[i].descricao);
-            fprintf(pSalvarVeiculos, "INICIO\n");
-            fprintf(pSalvarVeiculos, "**Descricao %s\n", veiculo[i].descricao);
-            fprintf(pSalvarVeiculos, "**Codigo %s\n", veiculo[i].codigo);
-            fprintf(pSalvarVeiculos, "**Status %s\n", veiculo[i].status);
-            fprintf(pSalvarVeiculos, "**Diaria %s\n", veiculo[i].diaria);
-            fprintf(pSalvarVeiculos, "**Placa %s\n", veiculo[i].hardware.placa);
-            fprintf(pSalvarVeiculos, "**Modelo %s\n", veiculo[i].hardware.modelo);
-            fprintf(pSalvarVeiculos, "**Ocupacao %s\n", veiculo[i].hardware.ocupacao);
-            fprintf(pSalvarVeiculos, "**Cor %s\n", veiculo[i].hardware.cor);
-            fprintf(pSalvarVeiculos, "FIM\n");
+            fprintf(pSalvarVeiculos, "INICIO VEICULO\n");
+            fprintf(pSalvarVeiculos, "Descricao %s\n", veiculo[i].descricao);
+            fprintf(pSalvarVeiculos, "Codigo %s\n", veiculo[i].codigo);
+            fprintf(pSalvarVeiculos, "Status %s\n", veiculo[i].status);
+            fprintf(pSalvarVeiculos, "Diaria %s\n", veiculo[i].diaria);
+            fprintf(pSalvarVeiculos, "Placa %s\n", veiculo[i].hardware.placa);
+            fprintf(pSalvarVeiculos, "Modelo %s\n", veiculo[i].hardware.modelo);
+            fprintf(pSalvarVeiculos, "Ocupacao %s\n", veiculo[i].hardware.ocupacao);
+            fprintf(pSalvarVeiculos, "Cor %s\n", veiculo[i].hardware.cor);
+            fprintf(pSalvarVeiculos, "FIM VEICULO\n");
         }
         fclose(pSalvarVeiculos);
     }
@@ -645,10 +654,10 @@ void escreverVetor()
 
 main()
 {
-    srand((unsigned int)(time(NULL)));
+    srand((unsigned int)(time(0)));
     carregaDadosDosArquivos();
     int opcao = 0;
-    while (opcao != 9)
+    while (opcao != 10)
     {
         system("cls");
         printf("\n ****** Cadastro de Clientes ********\n");
@@ -663,7 +672,7 @@ main()
         printf("\n 9.Programa de fidelidade");
         printf("\n 10.Encerrar ");
         printf("\n\n Digite sua opcao : ");
-        scanf(" %i", &opcao);
+        scanf(" %d", &opcao);
         if (opcao >= 1 && opcao <= 10)
         {
             switchComandosInterface(opcao);
@@ -671,6 +680,7 @@ main()
             system("pause");
         }
     }
+    printf("\n exeescreve");
     escreverVetor();
 }
 
