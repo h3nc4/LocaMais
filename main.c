@@ -45,6 +45,7 @@ struct sLog
     char preco[7];
     char retirada[11];
     char devolucao[11];
+    char devolucaotof[2];
     char seguro[2];
     char dias[4];
 };
@@ -66,7 +67,7 @@ struct sVeiculo
     char diaria[7];
     char codigo[SIZE__CODE_ALL];
     char descricao[15];
-    char status[2];
+    char status[10];
 };
 typedef struct sVeiculo tVeiculo;
 tVeiculo veiculo[X__SIZE_VEHICLES];
@@ -83,17 +84,43 @@ int pesquisarPorCodigoGlobal(int inpt)
                 return i;
     // Locacao
     if (inpt == 1)
-        for (int i = 0; i < X__SIZE_CLIENT && strcmp(logLocacao[i].devolucao, "EOF") != 0; i++)
+        for (int i = 0; i < X__SIZE_SELLING_LOG && strcmp(logLocacao[i].devolucao, "EOF") != 0; i++)
             if (strcasecmp(code, logLocacao[i].codigo.locacao) == 0)
                 return i;
     // Veiculo
     if (inpt == 2)
-        for (int i = 0; i < X__SIZE_CLIENT && strcmp(veiculo[i].descricao, "EOF") != 0; i++)
+        for (int i = 0; i < X__SIZE_VEHICLES && strcmp(veiculo[i].descricao, "EOF") != 0; i++)
             if (strcasecmp(code, veiculo[i].codigo) == 0)
                 return i;
     return -1;
 }
 
+int pesquisarPorCodigoVeiculo(char code[])
+{
+    int r = -1;
+    for (int i = 0; i < X__SIZE_VEHICLES && strcmp(veiculo[i].descricao, "EOF") != 0; i++)
+        if (strcasecmp(code, veiculo[i].codigo) == 0)
+        {
+            r = i;
+            i = X__SIZE_VEHICLES;
+        }
+    return r;
+}
+void printTudo()
+{
+    printf("\n Selecione o registro: \n 1.Clientes\n 2.Logs\n 3.Veiculos");
+    int choice = 0;
+    scanf("%d", &choice);
+    if (choice == 1)
+        for (int i = 0; strcmp("EOF", cliente[i].nome) != 0; i++)
+            printCliente(cliente[i]);
+    else if (choice == 2)
+        for (int i = 0; strcmp("EOF", logLocacao[i].devolucao) != 0; i++)
+            printLog(logLocacao[i]);
+    else if (choice == 3)
+        for (int i = 0; strcmp("EOF", veiculo[i].descricao) != 0; i++)
+            printVeiculo(veiculo[i]);
+}
 void printCliente(tCliente p)
 {
     printf("\n ***** Cliente *****");
@@ -128,6 +155,7 @@ void printLog(tLog r)
     printf("\n Cliente: %s", r.codigo.cliente);
     printf("\n Veiculo: %s", r.codigo.veiculo);
     printf("\n Rua %s, %s, %s", r.devolucao, r.retirada, r.dias);
+    printf("\n Devolvido? %s", r.devolucaotof);
     if (r.seguro == 'n')
         printf("\n Seguro: Nao contratado");
     else
@@ -150,6 +178,12 @@ void switchComandosInterface(int p)
         addLog();
     else if (p == 6)
         printLog(logLocacao[pesquisarPorCodigoGlobal(1)]);
+    else if (p == 7)
+        fimLog();
+    else if (p == 8)
+        printTudo();
+    else if (p == 9)
+        fidelilade();
 }
 
 int fimDeArquivoGlobal(int inp)
@@ -160,7 +194,7 @@ int fimDeArquivoGlobal(int inp)
                 return i;
     if (inp == 1)
         for (int i = 0; i < X__SIZE_SELLING_LOG; i++)
-            if (strcasecmp(logLocacao[i].retirada, "EOF") == 0)
+            if (strcasecmp(logLocacao[i].devolucao, "EOF") == 0)
                 return i;
     if (inp == 2)
         for (int i = 0; i < X__SIZE_VEHICLES; i++)
@@ -237,7 +271,7 @@ void addCliente()
     printf("\n Cliente %s incluido.", p.codigo);
 }
 
-devolucao(char inicio[11], char duracao[4], char fim[11])
+void devolucao(char inicio[11], char duracao[4], char fim[11])
 {
     // Inicializando ano em int
     int temp[3] = {(inicio[6] - '0') * 1000 + (inicio[7] - '0') * 100 + (inicio[8] - '0') * 10 + (inicio[9] - '0'),
@@ -252,7 +286,7 @@ devolucao(char inicio[11], char duracao[4], char fim[11])
     strftime(fim, 11, "%d/%m/%Y", &t);
 }
 
-calculaPreco(char veic[SIZE__CODE_ALL], char tofseguro[2], char fullduracao[4], char price[7])
+void calculaPreco(char veic[SIZE__CODE_ALL], char tofseguro[2], char fullduracao[4], char price[7])
 {
     int inew, iend = -1, diariaint, fullduracaoint;
     for (int inew = 0; inew < X__SIZE_VEHICLES && strcmp(veiculo[inew].descricao, "EOF") != 0; inew++)
@@ -270,36 +304,82 @@ calculaPreco(char veic[SIZE__CODE_ALL], char tofseguro[2], char fullduracao[4], 
     itoa(diariaint, price, 7);
 }
 
-addLog()
+void addLog()
 {
     // Criar tipo a ser preenchido
     tLog p;
     system("cls");
     // Preencher novo item
-    printf("\n******* Incluir veiculo *******\n");
+    printf("\n******* Incluir locacao *******");
+    int verificadorDeVeiculo = 0;
+    while (verificadorDeVeiculo == 0)
+    {
+        printf("\n Digite o codigo do veiculo: ");
+        scanf("%s", &p.codigo.veiculo);
+        if (strcmp(veiculo[pesquisarPorCodigoVeiculo(p.codigo.veiculo)].status, "Livre") == 0)
+        {
+            verificadorDeVeiculo = 1;
+            strcpy(veiculo[pesquisarPorCodigoVeiculo(p.codigo.veiculo)].status, "Em uso");
+        }
+        else
+            printf(" O veiculo nao esta livre para locacao.\n");
+    }
+    printf(" O veiculo esta livre para locacao.\n");
+    strcpy(p.devolucaotof, "N");
     printf("\n\nDigite a data de retirada (DD/MM/AAAA): ");
     scanf(" %[^\n]", &p.retirada);
-    printf(" Digite os dias: ");
+    printf(" Digite quantos dias que o cliente deseja alugar: ");
     scanf(" %[^\n]", &p.dias);
     devolucao(p.retirada, p.dias, p.devolucao);
-    printf("\n Ele sera devolvido no dia: %s", p.devolucao);
+    printf(" Ele sera devolvido no dia: %s", p.devolucao);
     geradorDeCodigoGlobal(p.codigo.locacao, 1);
-    printf("\n Codigo:%s", p.codigo);
+    printf("\n Codigo: %s", p.codigo);
     printf("\n O seguro esta incluido? (s/n): ");
     scanf(" %[^\n]", &p.seguro);
     printf(" Codigo do veiculo: ");
     scanf("%s", &p.codigo.veiculo);
     calculaPreco(p.codigo.veiculo, p.seguro, p.dias, p.preco);
     printf(" O cliente pagara: %s", p.preco);
-    printf(" Codigo do cliente: ");
+    printf("\n Codigo do cliente: ");
     scanf(" %[^\n]", &p.codigo.cliente);
     int i = fimDeArquivoGlobal(1);
     logLocacao[i] = p;
-    strcpy(logLocacao[i + 1].retirada, "EOF");
+    strcpy(logLocacao[i + 1].devolucao, "EOF");
     printf("\n Locacao %s incluida.", p.codigo.locacao);
 }
 
-addVeiculo()
+void fimLog()
+{
+    // Registra devolução
+    system("cls");
+    printf("\n******* Finalizar locacao *******");
+    // Buscar log
+    int logPointer, tof1 = 0;
+    while (tof1 == 0)
+    {
+        logPointer = pesquisarPorCodigoGlobal(1);
+        if (stcmp(logLocacao[logPointer].retirada, "S") != 0)
+            printf("\n Esta devolucao ja ocorreu");
+        else
+            tof1 = 1;
+    }
+    printLog(logLocacao[logPointer]);
+    printf("\n\n A data da entrega coincide com o esperado? (s/n)");
+    char tof;
+    scanf(" %c", &tof);
+    if (tof == 'n')
+    {
+        printf(" Digite quantos dias que o cliente alugou: ");
+        scanf(" %[^\n]", &logLocacao[logPointer].dias);
+        calculaPreco(logLocacao[logPointer].codigo.veiculo, logLocacao[logPointer].seguro, logLocacao[logPointer].dias, logLocacao[logPointer].preco);
+    }
+    printf(" Por favor, cobre %s reais do cliente", logLocacao[logPointer].preco);
+    system("pause");
+    strcpy(logLocacao[logPointer].devolucaotof, "S");
+    printf("\n Devolucao concluida");
+}
+
+void addVeiculo()
 {
     // Criar tipo a ser preenchido
     tVeiculo p;
@@ -312,7 +392,8 @@ addVeiculo()
     scanf(" %[^\n]", &p.hardware.cor);
     // Preencher codigo com funcao
     geradorDeCodigoGlobal(p.codigo, 2);
-    printf(" Codigo:%s", p.codigo);
+    printf(" Codigo: %s", p.codigo);
+    strcpy(p.status, "Livre");
     printf("\n Ocupacao: ");
     scanf(" %[^\n]", &p.hardware.ocupacao);
     printf(" Placa: ");
@@ -323,8 +404,29 @@ addVeiculo()
     scanf(" %[^\n]", &p.descricao);
     int i = fimDeArquivoGlobal(2);
     veiculo[i] = p;
-    strcpy(veiculo[i + 1].hardware.modelo, "EOF");
+    strcpy(veiculo[i + 1].descricao, "EOF");
     printf("\n Veiculo %s incluido.", p.codigo);
+}
+
+int printarContar(char cod[])
+{
+    int tot = 0;
+    for (int c = 0; strcmp("EOF", logLocacao[c].devolucao) != 0; c++)
+        if (strcmp(logLocacao[c].codigo.cliente, cod) == 0)
+        {
+            printLog(logLocacao[c]);
+            tot++;
+        }
+}
+
+void fidelidade()
+{
+    printf("\n******* Programa de fidelidade *******\n");
+    char code[SIZE__CODE_ALL];
+    printf("\n Informe o codigo do cliente:");
+    scanf("%s", &code);
+    int total = printarContar(code);
+    printf("\n No total, o cliente realizou %d alugueis", total);
 }
 
 void carregaDadosDosArquivos()
@@ -339,7 +441,7 @@ void carregaDadosDosArquivos()
     if (pLerCliente != NULL)
     {
         outputFscanf = fscanf(pLerCliente, "%s %[^\n]", &leitura, &escrita);
-        while (outputFscanf != "EOF")
+        while (outputFscanf != EOF)
         {
             // Le o inicio de um registro
             if (strcasecmp(leitura, "INICIO") == 0)
@@ -387,7 +489,7 @@ void carregaDadosDosArquivos()
     if (pLerLogLocacao != NULL)
     {
         outputFscanf = fscanf(pLerLogLocacao, "%s %[^\n]", &leitura, &escrita);
-        while (outputFscanf != "EOF")
+        while (outputFscanf != EOF)
         {
             // Le o inicio de um registro
             if (strcasecmp(leitura, "INICIO") == 0)
@@ -405,6 +507,8 @@ void carregaDadosDosArquivos()
                 strcpy(registro.dias, escrita);
             else if (strcasecmp(leitura, "**Retirada") == 0)
                 strcpy(registro.retirada, escrita);
+            else if (strcasecmp(leitura, "**Devolvido") == 0)
+                strcpy(registro.devolucaotof, escrita);
             else if (strcasecmp(leitura, "**Codigo") == 0)
                 strcpy(registro.codigo.locacao, escrita);
             else if (strcasecmp(leitura, "**Cliente") == 0)
@@ -427,10 +531,10 @@ void carregaDadosDosArquivos()
         fclose(pLerLogLocacao);
     }
 
-    if (pLerCliente != NULL)
+    if (pLerVeiculo != NULL)
     {
-        outputFscanf = fscanf(pLerCliente, "%s %[^\n]", &leitura, &escrita);
-        while (outputFscanf != "EOF")
+        outputFscanf = fscanf(pLerVeiculo, "%s %[^\n]", &leitura, &escrita);
+        while (outputFscanf != EOF)
         {
             // Le o inicio de um registro
             if (strcasecmp(leitura, "INICIO") == 0)
@@ -463,11 +567,11 @@ void carregaDadosDosArquivos()
                 veiculo[i] = vehicle;
                 i++; // i++ para mudar de registro
             }
-            outputFscanf = fscanf(pLerCliente, "%s %[^\n]", &leitura, &escrita);
+            outputFscanf = fscanf(pLerVeiculo, "%s %[^\n]", &leitura, &escrita);
         }
         // Ao final, escreve o fim do arquivo
         strcpy(veiculo[i].descricao, "EOF");
-        fclose(pLerCliente);
+        fclose(pLerVeiculo);
     }
 }
 
@@ -506,6 +610,7 @@ void escreverVetor()
             fprintf(pSalvarLogLocacao, "**Seguro %s\n", logLocacao[wCounter].seguro);
             fprintf(pSalvarLogLocacao, "**Dias %s\n", logLocacao[wCounter].dias);
             fprintf(pSalvarLogLocacao, "**Retirada %s\n", logLocacao[wCounter].retirada);
+            fprintf(pSalvarLogLocacao, "**Devolvido %s\n", logLocacao[wCounter].devolucaotof);
             fprintf(pSalvarLogLocacao, "**Codigo %s\n", logLocacao[wCounter].codigo.locacao);
             fprintf(pSalvarLogLocacao, "**Cliente %s\n", logLocacao[wCounter].codigo.cliente);
             fprintf(pSalvarLogLocacao, "**Veiculo %s\n", logLocacao[wCounter].codigo.veiculo);
@@ -539,6 +644,7 @@ void escreverVetor()
 main()
 {
     srand((unsigned int)(time(NULL)));
+    carregaDadosDosArquivos();
     int opcao = 0;
     while (opcao != 9)
     {
@@ -550,10 +656,13 @@ main()
         printf("\n 4.Pesquisar veiculo por codigo");
         printf("\n 5.Gerar nova locacao");
         printf("\n 6.Pesquisar locacao por codigo");
-        printf("\n 9.Encerrar ");
+        printf("\n 7.Determinar fim de locacao");
+        printf("\n 8.Printar todo o registro");
+        printf("\n 9.Programa de fidelidade");
+        printf("\n 10.Encerrar ");
         printf("\n\n Digite sua opcao : ");
         scanf(" %i", &opcao);
-        if (opcao >= 1 && opcao <= 9)
+        if (opcao >= 1 && opcao <= 10)
         {
             switchComandosInterface(opcao);
             printf("\n\n");
@@ -565,8 +674,8 @@ main()
 
 /******************************** INFO IMPORTANTE *************************************
 
-    cliente[k].nome sempre recebera EOF ao final do arquivo e vetor cliente
-    logLocacao[k].devolucao sempre recebera EOF ao final do arquivo e vetor loglocacao
-    veiculo[k].descricao sempre recebera EOF ao final do arquivo e vetor veiculo
+cliente[k].nome sempre recebera "EOF" ao final do arquivo e vetor cliente
+logLocacao[k].devolucao sempre recebera "EOF" ao final do arquivo e vetor loglocacao
+veiculo[k].descricao sempre recebera "EOF" ao final do arquivo e vetor veiculo
 
 ***************************************************************************************/
