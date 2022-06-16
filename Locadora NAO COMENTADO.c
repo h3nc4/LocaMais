@@ -357,7 +357,7 @@ int printarContar(char cod[])
 }
 void fidelidade()
 {
-    printf("\n********************* Programa de fidelidade ************************\n");
+    printf("\n******* Programa de fidelidade *******\n");
     char code[SIZE__CODE_ALL];
     printf("\n\n Informe o codigo do cliente:");
     scanf("%s", &code);
@@ -497,7 +497,7 @@ void carregaDadosDosArquivos()
 }
 void escreverVetores()
 {
-    FILE *pSalvarClientes = fopen("CLENTES.csv", "w"), *pSalvarLogLocacao = fopen("LOCACAO.csv", "w");
+    FILE *pSalvarClientes = fopen("CLENTES.csv", "w"), *pSalvarLogLocacao = fopen("LOCACAO.csv", "w"), *pSalvarVeiculos = fopen("VEICULO.csv", "w");
     if (pSalvarClientes != NULL)
     {
         for (i = 0; strcmp("EOF", cliente[i].nome) != 0; i++)
@@ -535,7 +535,6 @@ void escreverVetores()
         }
         fclose(pSalvarLogLocacao);
     }
-    FILE *pSalvarVeiculos = fopen("VEICULO.csv", "w");
     if (pSalvarVeiculos != NULL)
     {
         for (i = 0; strcmp("EOF", veiculo[i].descricao) != 0; i++)
@@ -562,7 +561,7 @@ main()
     while (opcao != 10)
     {
         system("cls");
-        printf("\n ****** Cadastro de Clientes ********\n");
+        printf("\n************************ Cadastro de Clientes ************************\n");
         printf("\n\n 1. Incluir cliente");
         printf("\n 2. Pesquisar cliente por codigo");
         printf("\n 3. Incluir veiculo");
