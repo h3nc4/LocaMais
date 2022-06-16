@@ -563,17 +563,17 @@ main()
     {
         system("cls");
         printf("\n ****** Cadastro de Clientes ********\n");
-        printf("\n\n 1.Incluir cliente");
-        printf("\n 2.Pesquisar cliente por codigo");
-        printf("\n 3.Incluir veiculo");
-        printf("\n 4.Pesquisar veiculo por codigo");
-        printf("\n 5.Gerar nova locacao");
-        printf("\n 6.Pesquisar locacao por codigo");
-        printf("\n 7.Determinar fim de locacao");
-        printf("\n 8.Printar todo o registro");
-        printf("\n 9.Programa de fidelidade");
-        printf("\n 10.Encerrar ");
-        printf("\n\n Digite sua opcao : ");
+        printf("\n\n 1. Incluir cliente");
+        printf("\n 2. Pesquisar cliente por codigo");
+        printf("\n 3. Incluir veiculo");
+        printf("\n 4. Pesquisar veiculo por codigo");
+        printf("\n 5. Gerar nova locacao");
+        printf("\n 6. Pesquisar locacao por codigo");
+        printf("\n 7. Determinar fim de locacao");
+        printf("\n 8. Printar todo o registro");
+        printf("\n 9. Programa de fidelidade");
+        printf("\n 10. Encerrar ");
+        printf("\n\n Digite sua opcao: ");
         scanf(" %d", &opcao);
         if (opcao >= 1 && opcao <= 10)
         {
