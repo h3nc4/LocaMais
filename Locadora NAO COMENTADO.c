@@ -4,9 +4,9 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-#define X__SIZE_CLIENT 1000
-#define X__SIZE_VEHICLES 1000
-#define X__SIZE_SELLING_LOG 1000
+#define X__SIZE_CLIENT 100
+#define X__SIZE_VEHICLES 100
+#define X__SIZE_SELLING_LOG 100
 #define SIZE__CODE_ALL 21
 int i;
 struct sEndereco
@@ -80,8 +80,8 @@ int pesquisarPorCodigoVeiculo(char code[])
 }
 void printCliente(tCliente p)
 {
-    printf("\n ***** Cliente *****");
-    printf("\n Nome: %s", p.nome);
+    printf("\n ******************** Cliente ********************");
+    printf("\n\n Nome: %s", p.nome);
     printf("\n Tel: %s", p.telefone);
     printf("\n Codigo: %s", p.codigo);
     printf("\n Endereco:");
@@ -91,8 +91,8 @@ void printCliente(tCliente p)
 }
 void printVeiculo(tVeiculo q)
 {
-    printf("\n ***** Veiculo *****");
-    printf("\n Modelo: %s", q.hardware.modelo);
+    printf("\n ***************** Veiculo *****************");
+    printf("\n\n Modelo: %s", q.hardware.modelo);
     printf("\n Descricao: %s", q.descricao);
     printf("\n Codigo: %s", q.codigo);
     printf("\n Cor: %s, Ocupacao: %s", q.hardware.cor, q.hardware.ocupacao);
@@ -102,8 +102,8 @@ void printVeiculo(tVeiculo q)
 }
 void printLog(tLog r)
 {
-    printf("\n ***** Log de vendas *****");
-    printf("\n Codigo: %s", r.codigo.locacao);
+    printf("\n ************* Log de vendas *************");
+    printf("\n\n Codigo: %s", r.codigo.locacao);
     printf("\n Cliente: %s", r.codigo.cliente);
     printf("\n Veiculo: %s", r.codigo.veiculo);
     printf("\n Retirada: %s Devolucao: %s Dias: %s", r.retirada, r.devolucao, r.dias);
@@ -206,13 +206,12 @@ void addCliente()
 {
     tCliente p;
     system("cls");
-    printf("\n******* Incluir cliente *******\n");
-    printf("\n\nDigite o nome: ");
+    printf("\n************** Incluir cliente **************\n");
+    printf("\n\n Digite o nome: ");
     scanf(" %[^\n]", &p.nome);
     printf(" Cel: ");
     scanf(" %[^\n]", &p.telefone);
-    printf("\n *ENDERECO*");
-    printf("\n Rua: ");
+    printf(" Rua: ");
     scanf(" %[^\n]", &p.endereco.rua);
     printf(" Nro: ");
     scanf("%s", &p.endereco.numero);
@@ -256,11 +255,11 @@ void addLog()
 {
     tLog p;
     system("cls");
-    printf("\n******* Incluir locacao *******");
+    printf("\n************** Incluir locacao **************");
     int verificadorDeVeiculo = 0, ponteiro = 0;
     while (verificadorDeVeiculo == 0)
     {
-        printf("\n Digite o codigo do veiculo: ");
+        printf("\n\n Digite o codigo do veiculo: ");
         scanf("%s", &p.codigo.veiculo);
         ponteiro = pesquisarPorCodigoVeiculo(p.codigo.veiculo);
         if (strcmp(veiculo[ponteiro].status, "Livre") == 0)
@@ -269,7 +268,7 @@ void addLog()
             printf(" O veiculo nao esta livre para locacao.\n");
     }
     printf(" O veiculo esta livre para locacao.\n");
-    printf("\n Codigo do cliente: ");
+    printf(" Codigo do cliente: ");
     scanf(" %[^\n]", &p.codigo.cliente);
     printf(" Digite a data de retirada (DD/MM/AAAA): ");
     scanf(" %[^\n]", &p.retirada);
@@ -294,7 +293,7 @@ void fimLog()
 {
     system("cls");
     int logPointer, carPointer, tof1 = 0;
-    printf("\n******* Finalizar locacao *******");
+    printf("\n************** Finalizar locacao **************");
     while (tof1 == 0)
     {
         logPointer = pesquisarPorCodigoGlobal(1);
@@ -313,7 +312,7 @@ void fimLog()
         scanf(" %[^\n]", &logLocacao[logPointer].dias);
         calculaPreco(logPointer, logLocacao[logPointer].seguro, logLocacao[logPointer].dias, logLocacao[logPointer].preco);
     }
-    printf(" Por favor, cobre %s reais do cliente", logLocacao[logPointer].preco);
+    printf(" Por favor, cobre %s reais do cliente\n ", logLocacao[logPointer].preco);
     system("pause");
     strcpy(logLocacao[logPointer].devolucaotof, "S");
     carPointer = pesquisarPorCodigoVeiculo(logLocacao[logPointer].codigo.veiculo);
@@ -324,12 +323,12 @@ void addVeiculo()
 {
     tVeiculo p;
     system("cls");
-    printf("\n******* Incluir veiculo *******\n");
-    printf("\n\nDigite o modelo: ");
+    printf("\n************** Incluir veiculo **************\n");
+    printf("\n\n Digite o modelo: ");
     scanf(" %[^\n]", &p.hardware.modelo);
     printf(" Cor: ");
     scanf(" %[^\n]", &p.hardware.cor);
-    printf("\n Ocupacao: ");
+    printf(" Ocupacao: ");
     scanf(" %[^\n]", &p.hardware.ocupacao);
     printf(" Placa: ");
     scanf("%s", &p.hardware.placa);
@@ -358,9 +357,9 @@ int printarContar(char cod[])
 }
 void fidelidade()
 {
-    printf("\n******* Programa de fidelidade *******\n");
+    printf("\n********************* Programa de fidelidade ************************\n");
     char code[SIZE__CODE_ALL];
-    printf("\n Informe o codigo do cliente:");
+    printf("\n\n Informe o codigo do cliente:");
     scanf("%s", &code);
     int total = printarContar(code) * 10;
     printf("\n Este cliente tem %d pontos", total);
@@ -564,7 +563,7 @@ main()
     {
         system("cls");
         printf("\n ****** Cadastro de Clientes ********\n");
-        printf("\n 1.Incluir cliente");
+        printf("\n\n 1.Incluir cliente");
         printf("\n 2.Pesquisar cliente por codigo");
         printf("\n 3.Incluir veiculo");
         printf("\n 4.Pesquisar veiculo por codigo");

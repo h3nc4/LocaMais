@@ -212,8 +212,8 @@ void printCliente(tCliente p)
 {
 
     // Interface do usuario
-    printf("\n ***** Cliente *****");
-    printf("\n Nome: %s", p.nome);
+    printf("\n ******************** Cliente ********************");
+    printf("\n\n Nome: %s", p.nome);
     printf("\n Tel: %s", p.telefone);
     printf("\n Codigo: %s", p.codigo);
     printf("\n Endereco:");
@@ -231,8 +231,8 @@ void printVeiculo(tVeiculo q)
 {
 
     // Interface do usuario
-    printf("\n ***** Veiculo *****");
-    printf("\n Modelo: %s", q.hardware.modelo);
+    printf("\n ***************** Veiculo *****************");
+    printf("\n\n Modelo: %s", q.hardware.modelo);
     printf("\n Descricao: %s", q.descricao);
     printf("\n Codigo: %s", q.codigo);
     printf("\n Cor: %s, Ocupacao: %s", q.hardware.cor, q.hardware.ocupacao);
@@ -250,8 +250,8 @@ void printLog(tLog r)
 {
 
     // Interface do usuario
-    printf("\n ***** Log de vendas *****");
-    printf("\n Codigo: %s", r.codigo.locacao);
+    printf("\n ************* Log de vendas *************");
+    printf("\n\n Codigo: %s", r.codigo.locacao);
     printf("\n Cliente: %s", r.codigo.cliente);
     printf("\n Veiculo: %s", r.codigo.veiculo);
     printf("\n Retirada: %s Devolucao: %s Dias: %s", r.retirada, r.devolucao, r.dias);
@@ -460,23 +460,20 @@ void addCliente()
     system("cls");
 
     // Interface da nova locacao
-    printf("\n******* Incluir cliente *******\n");
+    printf("\n************** Incluir cliente **************\n");
 
     /******* Preencher novo item atraves de inputs do usuario *******/
 
     // Sobre o nome
-    printf("\n\nDigite o nome: ");
+    printf("\n\n Digite o nome: ");
     scanf(" %[^\n]", &p.nome);
 
     // Sobre o telefone
     printf(" Cel: ");
     scanf(" %[^\n]", &p.telefone);
 
-    // Sobre o endereco
-    printf("\n *ENDERECO*");
-
     // Sobre a rua
-    printf("\n Rua: ");
+    printf(" Rua: ");
     scanf(" %[^\n]", &p.endereco.rua);
 
     // Sobre o numero da residencia
@@ -587,7 +584,7 @@ void addLog()
     system("cls");
 
     // Interface da nova locacao
-    printf("\n******* Incluir locacao *******");
+    printf("\n************** Incluir locacao **************");
     int verificadorDeVeiculo = 0,
         ponteiro = 0;
 
@@ -596,7 +593,7 @@ void addLog()
     {
 
         // Usuario digita o codigo do veiculo a ser alugado
-        printf("\n Digite o codigo do veiculo: ");
+        printf("\n\n Digite o codigo do veiculo: ");
         scanf("%s", &p.codigo.veiculo);
 
         // Verifica o status do veiculo desejado
@@ -612,7 +609,7 @@ void addLog()
     printf(" O veiculo esta livre para locacao.\n");
 
     // Scaneia o codigo do cliente que deseja realizar a locacao
-    printf("\n Codigo do cliente: ");
+    printf(" Codigo do cliente: ");
     scanf(" %[^\n]", &p.codigo.cliente);
 
     // Data da retirada em formato DD/MM/AAAA
@@ -671,7 +668,7 @@ void fimLog()
         tof1 = 0;
 
     // Interface de usuario
-    printf("\n******* Finalizar locacao *******");
+    printf("\n************** Finalizar locacao **************");
 
     // While para caso a locacao ja esteja fechada
     while (tof1 == 0)
@@ -707,7 +704,7 @@ void fimLog()
     }
 
     // Apresenta ao usuario o preco final
-    printf(" Por favor, cobre %s reais do cliente", logLocacao[logPointer].preco);
+    printf(" Por favor, cobre %s reais do cliente\n ", logLocacao[logPointer].preco);
 
     // Segue apos a cobranca
     system("pause");
@@ -741,10 +738,10 @@ void addVeiculo()
     /******* Preencher novo item atraves de inputs do usuario *******/
 
     // Interface de usuario
-    printf("\n******* Incluir veiculo *******\n");
+    printf("\n************** Incluir veiculo **************\n");
 
     // Sobre o modelo
-    printf("\n\nDigite o modelo: ");
+    printf("\n\n Digite o modelo: ");
     scanf(" %[^\n]", &p.hardware.modelo);
 
     // Sobre a cor
@@ -752,7 +749,7 @@ void addVeiculo()
     scanf(" %[^\n]", &p.hardware.cor);
 
     // Sobre a ocupacao
-    printf("\n Ocupacao: ");
+    printf(" Ocupacao: ");
     scanf(" %[^\n]", &p.hardware.ocupacao);
 
     // Sobre a placa
@@ -821,7 +818,7 @@ void fidelidade()
     char code[SIZE__CODE_ALL];
 
     // Usuario digita o codigo do cliente
-    printf("\n Informe o codigo do cliente:");
+    printf("\n\n Informe o codigo do cliente:");
     scanf("%s", &code);
 
     // Envia o codigo para a funcao anterior, printanto locacoes do cliente e retornando o seu total
@@ -1099,7 +1096,7 @@ main()
     {
         system("cls");
         printf("\n ****** Cadastro de Clientes ********\n");
-        printf("\n 1.Incluir cliente");
+        printf("\n\n 1.Incluir cliente");
         printf("\n 2.Pesquisar cliente por codigo");
         printf("\n 3.Incluir veiculo");
         printf("\n 4.Pesquisar veiculo por codigo");

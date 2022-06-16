@@ -1,7 +1,7 @@
 INICIO VEICULO
 Descricao Carro de cria
 Codigo 92411/164.144.426-22
-Status Em Uso
+Status Em uso
 Diaria 140
 Placa GHW-7269
 Modelo Chevrolet Onix
@@ -37,4 +37,14 @@ Placa PVT-5625
 Modelo Fiat Uno
 Ocupacao 5
 Cor Prata
+FIM VEICULO
+INICIO VEICULO
+Descricao Camaro tunadao
+Codigo 87435/166.002.209-22
+Status Livre
+Diaria 210
+Placa KIT-5256
+Modelo Camaro
+Ocupacao 5
+Cor Amarelo
 FIM VEICULO
