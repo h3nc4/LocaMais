@@ -1453,6 +1453,7 @@ main()
         printf("\n 10. Encerrar ");
         printf("\n\n Digite sua opcao: ");
         scanf(" %d", &opcao);
+        
         if (opcao >= 1 && opcao <= 10)
         {
 
