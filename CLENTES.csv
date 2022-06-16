@@ -1,72 +1,72 @@
-INICIO
-**Nome Luquinhas
-**Codigo 1/409.174.411-22
-**Telefone 31-99999-9999
-**Rua rua da luz
-**Nro 692
-**Comp casa
-**Bairro Santa Lucia
-**Cidade Belo Horizonte
-**Estado MG
-**Cep 30.110-111
-FIM
-INICIO
-**Nome Ana Claras
-**Codigo 1/811.174.538-22
-**Telefone 31-99999-9999
-**Rua rua da luz
-**Nro 692
-**Comp casa
-**Bairro Santa Lucia
-**Cidade Belo Horizonte
-**Estado MG
-**Cep 30.110-112
-FIM
-INICIO
-**Nome Pedro Santos
-**Codigo 0/396.174.556-22
-**Telefone 31-99999-9999
-**Rua rua da luz
-**Nro 692
-**Comp casa
-**Bairro Santa Lucia
-**Cidade Belo Horizonte
-**Estado MG
-**Cep 30.110-113
-FIM
-INICIO
-**Nome Theodoro
-**Codigo 3/494.174.617-22
-**Telefone 31-99999-9999
-**Rua rua da luz
-**Nro 692
-**Comp casa
-**Bairro Santa Lucia
-**Cidade Belo Horizonte
-**Estado MG
-**Cep 30.110-114
-FIM
-INICIO
-**Nome Joaquim
-**Codigo 1/767.174.633-22
-**Telefone 31-99999-9999
-**Rua rua da luz
-**Nro 692
-**Comp casa
-**Bairro Santa Lucia
-**Cidade Belo Horizonte
-**Estado MG
-**Cep 30.110-115
-FIM
-INICIO
-**Nome Henrique
-**Codigo 2/221.174.647-22
-**Telefone 31-99999-9999
-**Rua rua da felicidade
-**Nro 1000
-**Comp 101
-**Bairro Ana lucia
-**Cidade Belo Horizonte
-**Estado MG
-**Cep 12.345-123
-FIM
+INICIO CLIENTE
+Nome Luquinhas
+Codigo 1/409.174.411-22
+Telefone 31-99999-9999
+Rua rua da luz
+Nro 692
+Comp casa
+Bairro Santa Lucia
+Cidade Belo Horizonte
+Estado MG
+Cep 30.110-111
+FIM CLIENTE
+INICIO CLIENTE
+Nome Ana Clara
+Codigo 1/811.174.538-22
+Telefone 31-99999-9999
+Rua rua da luz
+Nro 692
+Comp casa
+Bairro Santa Lucia
+Cidade Belo Horizonte
+Estado MG
+Cep 30.110-112
+FIM CLIENTE
+INICIO CLIENTE
+Nome Pedro Santos
+Codigo 0/396.174.556-22
+Telefone 31-99999-9999
+Rua rua da luz
+Nro 692
+Comp casa
+Bairro Santa Lucia
+Cidade Belo Horizonte
+Estado MG
+Cep 30.110-113
+FIM CLIENTE
+INICIO CLIENTE
+Nome Theodoro
+Codigo 3/494.174.617-22
+Telefone 31-99999-9999
+Rua rua da luz
+Nro 692
+Comp casa
+Bairro Santa Lucia
+Cidade Belo Horizonte
+Estado MG
+Cep 30.110-114
+FIM CLIENTE
+INICIO CLIENTE
+Nome Joaquim
+Codigo 1/767.174.633-22
+Telefone 31-99999-9999
+Rua rua da luz
+Nro 692
+Comp casa
+Bairro Santa Lucia
+Cidade Belo Horizonte
+Estado MG
+Cep 30.110-115
+FIM CLIENTE
+INICIO CLIENTE
+Nome Henrique
+Codigo 2/221.174.647-22
+Telefone 31-99999-9999
+Rua rua da felicidade
+Nro 1000
+Comp 101
+Bairro Ana lucia
+Cidade Belo Horizonte
+Estado MG
+Cep 12.345-123
+FIM CLIENTE
