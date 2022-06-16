@@ -32,9 +32,9 @@
 
 // Definicoes de tamanhos para os vetores que carregam os arquivos
 
-#define X__SIZE_CLIENT 100
-#define X__SIZE_VEHICLES 100
-#define X__SIZE_SELLING_LOG 100
+#define X__SIZE_CLIENT 1000
+#define X__SIZE_VEHICLES 1000
+#define X__SIZE_SELLING_LOG 1000
 
 // Definicao global para o tamanho dos codigos
 

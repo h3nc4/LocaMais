@@ -4,9 +4,9 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-#define X__SIZE_CLIENT 100
-#define X__SIZE_VEHICLES 100
-#define X__SIZE_SELLING_LOG 100
+#define X__SIZE_CLIENT 1000
+#define X__SIZE_VEHICLES 1000
+#define X__SIZE_SELLING_LOG 1000
 #define SIZE__CODE_ALL 21
 int i;
 struct sEndereco
