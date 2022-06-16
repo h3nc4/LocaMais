@@ -146,6 +146,7 @@ tVeiculo veiculo[X__SIZE_VEHICLES];
 //
 
 // Funcao retorna o ponteiro de um registro atraves do codigo, seja de pessoa, locacao ou veiculo
+
 int pesquisarPorCodigoGlobal(int inpt)
 
 {
@@ -186,6 +187,12 @@ int pesquisarPorCodigoGlobal(int inpt)
     }
 
     return -1;
+
+    //
+
+    // Fim da funcao
+
+    //
 }
 
 //
@@ -201,12 +208,19 @@ int pesquisarPorCodigoVeiculo(char code[])
             return i;
 
     return -1;
+
+    //
+
+    // Fim da funcao
+
+    //
 }
 
 //
 
 /* Esta funcao printa o registro de um cliente especifico,
     ela recebe como entrada o ponteiro do cliente */
+
 void printCliente(tCliente p)
 
 {
@@ -220,12 +234,19 @@ void printCliente(tCliente p)
     printf("\n Rua %s, %s, %s", p.endereco.rua, p.endereco.numero, p.endereco.complemento);
     printf("\n %s, %s, %s", p.endereco.cidade, p.endereco.estado, p.endereco.cep);
     printf("\n");
+
+    //
+
+    // Fim da funcao
+
+    //
 }
 
 //
 
 /* Esta funcao printa o registro de um veiculo especifico,
     ela recebe como entrada o ponteiro do veiculo */
+
 void printVeiculo(tVeiculo q)
 
 {
@@ -239,12 +260,19 @@ void printVeiculo(tVeiculo q)
     printf("\n Diaria: %s, Placa: %s", q.diaria, q.hardware.placa);
     printf("\n Status: %s", q.status);
     printf("\n");
+
+    //
+
+    // Fim da funcao
+
+    //
 }
 
 //
 
 /* Esta funcao printa o registro de uma locacao especifica,
     ela recebe como entrada o ponteiro da locacao */
+
 void printLog(tLog r)
 
 {
@@ -265,11 +293,18 @@ void printLog(tLog r)
     else
         printf("\n Seguro Contratado");
     printf("\n");
+
+    //
+
+    // Fim da funcao
+
+    //
 }
 
 //
 
 // Printa todo o registro do tipo que o usuario desejar
+
 void printTudo()
 
 {
@@ -294,12 +329,19 @@ void printTudo()
     else if (choice == 3)
         for (i = 0; strcmp("EOF", veiculo[i].descricao) != 0; i++)
             printVeiculo(veiculo[i]);
+
+    //
+
+    // Fim da funcao
+
+    //
 }
 
 //
 
 /* Funcao auxiliar da interface de usuario,
    recebe como entrada um numero inteiro e designa a funcao correspondente */
+
 void switchComandosInterface(int p)
 
 {
@@ -342,12 +384,19 @@ void switchComandosInterface(int p)
     // Printar todas as locacoes de um cliente e o eleger para o kit LocaMais
     else if (p == 9)
         fidelidade();
+
+    //
+
+    // Fim da funcao
+
+    //
 }
 
 //
 
 /* Esta funcao encontra o ponteiro final de um vetor e o retorna,
     ela recebe uma entrada inteira que define o vetor a ser varido */
+
 int fimDeVetorGlobal(int inp)
 
 {
@@ -372,11 +421,18 @@ int fimDeVetorGlobal(int inp)
 
     // Retorna -1 caso nada seja retornado
     return -1;
+
+    //
+
+    // Fim da funcao
+
+    //
 }
 
 //
 
 // Esta funcao gera codigos para todos os tipos, nela entram o codigo a ser gerado e o seu tipo
+
 void geradorDeCodigoGlobal(char codGerado[], int in)
 
 {
@@ -447,14 +503,22 @@ void geradorDeCodigoGlobal(char codGerado[], int in)
 
     // Fim da string
     codGerado[20] = NULL;
+
+    //
+
+    // Fim da funcao
+
+    //
 }
 
 //
 
 // Esta funcao adiciona um cliente
+
 void addCliente()
 
 {
+
     // Criar tipo a ser preenchido
     tCliente p;
     system("cls");
@@ -517,11 +581,18 @@ void addCliente()
 
     // Declara o sucesso da operacao ao usuario
     printf("\n Cliente %s incluido.", p.codigo);
+
+    //
+
+    // Fim da funcao
+
+    //
 }
 
 //
 
 // Calcula data da devolucao
+
 void devolucao(char inicio[11], char duracao[4], char fim[11])
 
 {
@@ -544,14 +615,22 @@ void devolucao(char inicio[11], char duracao[4], char fim[11])
 
     // Escrever nova data formatada em string
     strftime(fim, 11, "%d/%m/%Y", &t);
+
+    //
+
+    // Fim da funcao
+
+    //
 }
 
 //
 
 // Calcula o preco de uma locacao
+
 void calculaPreco(int point, char tofseguro[2], char fullduracao[4], char price[7])
 
 {
+
     int diariaint,
         fullduracaoint;
 
@@ -570,11 +649,18 @@ void calculaPreco(int point, char tofseguro[2], char fullduracao[4], char price[
 
     // Converte o preco em int para string
     itoa(diariaint, price, 10);
+
+    //
+
+    // Fim da funcao
+
+    //
 }
 
 //
 
 // Esta funcao registra uma nova locacao
+
 void addLog()
 
 {
@@ -603,6 +689,7 @@ void addLog()
         else
             printf(" O veiculo nao esta livre para locacao.\n");
     }
+
     /******* Preencher novo item atraves de inputs do usuario *******/
 
     // Informa ao usuario a disponibilidade positiva
@@ -627,6 +714,7 @@ void addLog()
     // Sobre o seguro de 50 RS
     printf("\n O seguro esta incluido? (s/n): ");
     scanf(" %[^\n]", &p.seguro);
+
     /*********************** Fim dos inputs *********************/
 
     // Calcula o preco esperado da locacao
@@ -654,11 +742,18 @@ void addLog()
 
     // Declara o sucesso da operacao ao usuario
     printf("\n Locacao %s incluida.", p.codigo.locacao);
+
+    //
+
+    // Fim da funcao
+
+    //
 }
 
 //
 
 // Esta funcao registra a devolução de um veiculo, "dando baixa" em uma locacao
+
 void fimLog()
 
 {
@@ -724,13 +819,22 @@ void fimLog()
 
     // Declara o sucesso da devolucao ao usuario
     printf("\n Devolucao concluida");
+
+    //
+
+    // Fim da funcao
+
+    //
 }
 
 //
 
+// Esta funcao adiciona um veiculo ao registro
+
 void addVeiculo()
 
 {
+
     // Criar tipo a ser preenchido
     tVeiculo p;
     system("cls");
@@ -784,11 +888,18 @@ void addVeiculo()
 
     // Declara sucesso ao usuario
     printf("\n Veiculo %s incluido.", p.codigo);
+
+    //
+
+    // Fim da funcao
+
+    //
 }
 
 //
 
 // Funcao recebe o codigo de um cliente, printa todos as suas locacoes e retorna o seu total
+
 int printarContar(char cod[])
 
 {
@@ -805,6 +916,12 @@ int printarContar(char cod[])
             i++;
         }
     return i;
+
+    //
+
+    // Fim da funcao
+
+    //
 }
 
 //
@@ -830,6 +947,12 @@ void fidelidade()
     // Se o cliente tiver 500 pontos, declara sua qualificacao ao kit
     if (total >= 500)
         printf(", qualificando-o para o kit da LocaMais.");
+
+    //
+
+    // Fim da funcao
+
+    //
 }
 
 //
@@ -839,6 +962,7 @@ void fidelidade()
 void carregaDadosDosArquivos()
 
 {
+
     FILE *pLerCliente = fopen("CLENTES.csv", "r"),
          *pLerLogLocacao = fopen("LOCACAO.csv", "r"),
          *pLerVeiculo = fopen("VEICULO.csv", "r");
@@ -854,11 +978,15 @@ void carregaDadosDosArquivos()
 
     // outScan le o retorno do scanf, testando assim se o arquivo chegou ao final
     int outScan;
+
+    // Inicializa o ponteiro
     i = 0;
 
     // Se o arquivo existe
     if (pLerCliente != NULL)
     {
+
+        // outScan le o retorno do scanf, testando assim se o arquivo chegou ao final
         outScan = fscanf(pLerCliente, "%s %[^\n]", &type, &value);
 
         // Enquanto o arquivo nao chega ao fim
@@ -875,24 +1003,44 @@ void carregaDadosDosArquivos()
 
             /* Le cada uma das linhas em busca de sua respectiva variavel,
                definitivamente nao e o metodo mais eficiente */
+
+            // Estrutura nome
             else if (strcasecmp(type, "Nome") == 0)
                 strcpy(client.nome, value);
+
+            // Estrutura telefone
             else if (strcasecmp(type, "Telefone") == 0)
                 strcpy(client.telefone, value);
+
+            // Estrutura codigo
             else if (strcasecmp(type, "Codigo") == 0)
                 strcpy(client.codigo, value);
+
+            // Estrutura rua
             else if (strcasecmp(type, "Rua") == 0)
                 strcpy(client.endereco.rua, value);
+
+            // Estrutura numero
             else if (strcasecmp(type, "Nro") == 0)
                 strcpy(client.endereco.numero, value);
+
+            // Estrutura complemento
             else if (strcasecmp(type, "Comp") == 0)
                 strcpy(client.endereco.complemento, value);
+
+            // Estrutura bairro
             else if (strcasecmp(type, "Bairro") == 0)
                 strcpy(client.endereco.bairro, value);
+
+            // Estrutura cidade
             else if (strcasecmp(type, "Cidade") == 0)
                 strcpy(client.endereco.cidade, value);
+
+            // Estrutura estado
             else if (strcasecmp(type, "Estado") == 0)
                 strcpy(client.endereco.estado, value);
+
+            // Estrutura cep
             else if (strcasecmp(type, "Cep") == 0)
                 strcpy(client.endereco.cep, value);
 
@@ -906,6 +1054,8 @@ void carregaDadosDosArquivos()
                 // i++ para mudar de registro no vetor
                 i++;
             }
+
+            // outScan le o retorno do scanf, testando assim se o arquivo chegou ao final
             outScan = fscanf(pLerCliente, "%s %[^\n]", &type, &value);
         }
 
@@ -916,87 +1066,178 @@ void carregaDadosDosArquivos()
         fclose(pLerCliente);
     }
 
-    //              OS PROXIMOS DOIS "IF" SAO EXATAMENTE IGUAIS AO PRIMEIRO
+    //
+    //              OS PROXIMOS DOIS "IF" SAO EXATAMENTE IGUAIS AO PRIMEIRO, POREM PARA OUTROS VETORES
+    //
 
+    // Se o arquivo existe
     if (pLerLogLocacao != NULL)
     {
+
+        // Inicializa o ponteiro
         i = 0;
+
+        // outScan le o retorno do scanf, testando assim se o arquivo chegou ao final
         outScan = fscanf(pLerLogLocacao, "%s %[^\n]", &type, &value);
+
+        // Enquanto o arquivo nao chega ao fim
         while (outScan != EOF)
         {
+
+            // Le o inicio do registro no arquivo
             if (strcasecmp(type, "INICIO") == 0)
             {
                 strcpy(registro.devolucao, "");
                 strcpy(registro.seguro, "");
                 strcpy(registro.dias, "");
             }
+
+            /* Le cada uma das linhas em busca de sua respectiva variavel,
+               definitivamente nao e o metodo mais eficiente */
+
+            // Estrutura devolucao
             else if (strcasecmp(type, "Devolucao") == 0)
                 strcpy(registro.devolucao, value);
+
+            // Estrutura seguro
             else if (strcasecmp(type, "Seguro") == 0)
                 strcpy(registro.seguro, value);
+
+            // Estrutura dias
             else if (strcasecmp(type, "Dias") == 0)
                 strcpy(registro.dias, value);
+
+            // Estrutura retirada
             else if (strcasecmp(type, "Retirada") == 0)
                 strcpy(registro.retirada, value);
+
+            // Estrutura devolvido
             else if (strcasecmp(type, "Devolvido") == 0)
                 strcpy(registro.devolucaotof, value);
+
+            // Estrutura codigo
             else if (strcasecmp(type, "Codigo") == 0)
                 strcpy(registro.codigo.locacao, value);
+
+            // Estrutura cliente
             else if (strcasecmp(type, "Cliente") == 0)
                 strcpy(registro.codigo.cliente, value);
+
+            // Estrutura veiculo
             else if (strcasecmp(type, "Veiculo") == 0)
                 strcpy(registro.codigo.veiculo, value);
+
+            // Estrutura preco
             else if (strcasecmp(type, "Preco") == 0)
                 strcpy(registro.preco, value);
+
+            // Le fim do registro no arquivo
             else if (strcasecmp(type, "FIM") == 0)
             {
+
+                // Passa do vetor temporario para o definitivo
                 logLocacao[i] = registro;
+
+                // i++ para mudar de registro no vetor
                 i++;
             }
+
+            // outScan le o retorno do scanf, testando assim se o arquivo chegou ao final
             outScan = fscanf(pLerLogLocacao, "%s %[^\n]", &type, &value);
         }
+
+        // Ao final, escreve o fim do vetor
         strcpy(logLocacao[i].devolucao, "EOF");
+
+        // Fecha o arquivo
         fclose(pLerLogLocacao);
     }
 
+    // Se o arquivo existe
     if (pLerVeiculo != NULL)
     {
+
+        // Inicializa o ponteiro
         i = 0;
+
+        // outScan le o retorno do scanf, testando assim se o arquivo chegou ao final
         outScan = fscanf(pLerVeiculo, "%s %[^\n]", &type, &value);
+
+        // Enquanto o arquivo nao chega ao fim
         while (outScan != EOF)
         {
+
+            // Le o inicio do registro no arquivo
             if (strcasecmp(type, "INICIO") == 0)
             {
                 strcpy(vehicle.descricao, "");
                 strcpy(vehicle.codigo, "");
                 strcpy(vehicle.status, "");
             }
+
+            /* Le cada uma das linhas em busca de sua respectiva variavel,
+               definitivamente nao e o metodo mais eficiente */
+
+            // Estrutura descricao
             else if (strcasecmp(type, "Descricao") == 0)
                 strcpy(vehicle.descricao, value);
+
+            // Estrutura codigo
             else if (strcasecmp(type, "Codigo") == 0)
                 strcpy(vehicle.codigo, value);
+
+            // Estrutura status
             else if (strcasecmp(type, "Status") == 0)
                 strcpy(vehicle.status, value);
+
+            // Estrutura diaria
             else if (strcasecmp(type, "Diaria") == 0)
                 strcpy(vehicle.diaria, value);
+
+            // Estrutura placa
             else if (strcasecmp(type, "Placa") == 0)
                 strcpy(vehicle.hardware.placa, value);
+
+            // Estrutura modelo
             else if (strcasecmp(type, "Modelo") == 0)
                 strcpy(vehicle.hardware.modelo, value);
+
+            // Estrutura ocupacao
             else if (strcasecmp(type, "Ocupacao") == 0)
                 strcpy(vehicle.hardware.ocupacao, value);
+
+            // Estrutura cor
             else if (strcasecmp(type, "Cor") == 0)
                 strcpy(vehicle.hardware.cor, value);
+
+            // Le fim do registro no arquivo
             else if (strcasecmp(type, "FIM") == 0)
             {
+
+                // Passa do vetor temporario para o definitivo
                 veiculo[i] = vehicle;
+
+                // i++ para mudar de registro no vetor
                 i++;
             }
+
+            // outScan le o retorno do scanf, testando assim se o arquivo chegou ao final
+
             outScan = fscanf(pLerVeiculo, "%s %[^\n]", &type, &value);
         }
+
+        // Ao final, escreve o fim do vetor
         strcpy(veiculo[i].descricao, "EOF");
+
+        // Fecha o arquivo
         fclose(pLerVeiculo);
     }
+
+    //
+
+    // Fim da funcao
+
+    //
 }
 
 //
@@ -1007,66 +1248,166 @@ void escreverVetores()
 
 {
     // Arquivo
-    FILE *pSalvarClientes = fopen("CLENTES.csv", "w"), *pSalvarLogLocacao = fopen("LOCACAO.csv", "w");
+    FILE *pSalvarClientes = fopen("CLENTES.csv", "w"),
+         *pSalvarLogLocacao = fopen("LOCACAO.csv", "w"),
+         *pSalvarVeiculos = fopen("VEICULO.csv", "w");
+
+    // Se o ponteiro existe
+
     if (pSalvarClientes != NULL)
     {
+
+        /* "for" funciona como contador, inicializador e while da funcao,
+            chegando ao fim quando encontra a string "EOF" no vetor */
+
         for (i = 0; strcmp("EOF", cliente[i].nome) != 0; i++)
         {
+
+            // Le o inicio do registro no vetor
             fprintf(pSalvarClientes, "INICIO CLIENTE\n");
+
+            // Escreve a estrutura nome
             fprintf(pSalvarClientes, "Nome %s\n", cliente[i].nome);
+
+            // Escreve a estrutura codigo
             fprintf(pSalvarClientes, "Codigo %s\n", cliente[i].codigo);
+
+            // Escreve a estrutura telefone
             fprintf(pSalvarClientes, "Telefone %s\n", cliente[i].telefone);
+
+            // Escreve a estrutura rua
             fprintf(pSalvarClientes, "Rua %s\n", cliente[i].endereco.rua);
+
+            // Escreve a estrutura numero
             fprintf(pSalvarClientes, "Nro %s\n", cliente[i].endereco.numero);
+
+            // Escreve a estrutura complemento
             fprintf(pSalvarClientes, "Comp %s\n", cliente[i].endereco.complemento);
+
+            // Escreve a estrutura bairro
             fprintf(pSalvarClientes, "Bairro %s\n", cliente[i].endereco.bairro);
+
+            // Escreve a estrutura cidade
             fprintf(pSalvarClientes, "Cidade %s\n", cliente[i].endereco.cidade);
+
+            // Escreve a estrutura estado
             fprintf(pSalvarClientes, "Estado %s\n", cliente[i].endereco.estado);
+
+            // Escreve a estrutura cep
             fprintf(pSalvarClientes, "Cep %s\n", cliente[i].endereco.cep);
+
+            // Le o fim do registro no vetor
             fprintf(pSalvarClientes, "FIM CLIENTE\n");
         }
+
+        // Fecha o arquivo
         fclose(pSalvarClientes);
     }
 
-    // OS PROXIMOS IF SAO EXATAMENTE IGUAIS
+    //
+    //              OS PROXIMOS DOIS "IF" SAO EXATAMENTE IGUAIS AO PRIMEIRO, POREM PARA OUTROS VETORES
+    //
+
+    // Se o ponteiro existe
 
     if (pSalvarLogLocacao != NULL)
     {
+
+        /* "for" funciona como contador, inicializador e while da funcao,
+            chegando ao fim quando encontra a string "EOF" no vetor */
+
         for (i = 0; strcmp("EOF", logLocacao[i].devolucao) != 0; i++)
         {
+
+            // Le o inicio do registro no vetor
             fprintf(pSalvarLogLocacao, "INICIO LOCACAO\n");
+
+            // Escreve a estrutura devolucao
             fprintf(pSalvarLogLocacao, "Devolucao %s\n", logLocacao[i].devolucao);
+
+            // Escreve a estrutura seguro
             fprintf(pSalvarLogLocacao, "Seguro %s\n", logLocacao[i].seguro);
+
+            // Escreve a estrutura dias
             fprintf(pSalvarLogLocacao, "Dias %s\n", logLocacao[i].dias);
+
+            // Escreve a estrutura retirada
             fprintf(pSalvarLogLocacao, "Retirada %s\n", logLocacao[i].retirada);
+
+            // Escreve a estrutura devolvido
             fprintf(pSalvarLogLocacao, "Devolvido %s\n", logLocacao[i].devolucaotof);
+
+            // Escreve a estrutura codigo
             fprintf(pSalvarLogLocacao, "Codigo %s\n", logLocacao[i].codigo.locacao);
+
+            // Escreve a estrutura cliente
             fprintf(pSalvarLogLocacao, "Cliente %s\n", logLocacao[i].codigo.cliente);
+
+            // Escreve a estrutura veiculo
             fprintf(pSalvarLogLocacao, "Veiculo %s\n", logLocacao[i].codigo.veiculo);
+
+            // Escreve a estrutura preco
             fprintf(pSalvarLogLocacao, "Preco %s\n", logLocacao[i].preco);
+
+            // Le o fim do registro no vetor
             fprintf(pSalvarLogLocacao, "FIM LOCACAO\n");
         }
+
+        // Fecha o arquivo
         fclose(pSalvarLogLocacao);
     }
-    FILE *pSalvarVeiculos = fopen("VEICULO.csv", "w");
+
+    // Se o ponteiro existe
 
     if (pSalvarVeiculos != NULL)
     {
+
+        /* "for" funciona como contador, inicializador e while da funcao,
+            chegando ao fim quando encontra a string "EOF" no vetor */
+
         for (i = 0; strcmp("EOF", veiculo[i].descricao) != 0; i++)
         {
+
+            // Le o inicio do registro no vetor
             fprintf(pSalvarVeiculos, "INICIO VEICULO\n");
+
+            // Escreve a estrutura descricao
             fprintf(pSalvarVeiculos, "Descricao %s\n", veiculo[i].descricao);
+
+            // Escreve a estrutura codigo
             fprintf(pSalvarVeiculos, "Codigo %s\n", veiculo[i].codigo);
+
+            // Escreve a estrutura status
             fprintf(pSalvarVeiculos, "Status %s\n", veiculo[i].status);
+
+            // Escreve a estrutura diaria
             fprintf(pSalvarVeiculos, "Diaria %s\n", veiculo[i].diaria);
+
+            // Escreve a estrutura placa
             fprintf(pSalvarVeiculos, "Placa %s\n", veiculo[i].hardware.placa);
+
+            // Escreve a estrutura modelo
             fprintf(pSalvarVeiculos, "Modelo %s\n", veiculo[i].hardware.modelo);
+
+            // Escreve a estrutura ocupacao
             fprintf(pSalvarVeiculos, "Ocupacao %s\n", veiculo[i].hardware.ocupacao);
+
+            // Escreve a estrutura cor
             fprintf(pSalvarVeiculos, "Cor %s\n", veiculo[i].hardware.cor);
+
+            // Le o fim do registro no vetor
             fprintf(pSalvarVeiculos, "FIM VEICULO\n");
         }
+
+        // Fecha o arquivo
         fclose(pSalvarVeiculos);
     }
+
+    //
+
+    // Fim da funcao
+
+    //
 }
 
 //
@@ -1090,27 +1431,32 @@ main()
     // Carrega os arquivos
     carregaDadosDosArquivos();
 
-    // Interface de usuario
+    // Decisao do usuario
     int opcao = 0;
+
+    // "while" prende o usuario a escolher uma funcao valida
     while (opcao != 10)
     {
         system("cls");
-        printf("\n ****** Cadastro de Clientes ********\n");
-        printf("\n\n 1.Incluir cliente");
-        printf("\n 2.Pesquisar cliente por codigo");
-        printf("\n 3.Incluir veiculo");
-        printf("\n 4.Pesquisar veiculo por codigo");
-        printf("\n 5.Gerar nova locacao");
-        printf("\n 6.Pesquisar locacao por codigo");
-        printf("\n 7.Determinar fim de locacao");
-        printf("\n 8.Printar todo o registro");
-        printf("\n 9.Programa de fidelidade");
-        printf("\n 10.Encerrar ");
-        printf("\n\n Digite sua opcao : ");
+
+        // Interface de usuario
+        printf("\n************************ Cadastro de Clientes ************************\n");
+        printf("\n\n 1. Incluir cliente");
+        printf("\n 2. Pesquisar cliente por codigo");
+        printf("\n 3. Incluir veiculo");
+        printf("\n 4. Pesquisar veiculo por codigo");
+        printf("\n 5. Gerar nova locacao");
+        printf("\n 6. Pesquisar locacao por codigo");
+        printf("\n 7. Determinar fim de locacao");
+        printf("\n 8. Printar todo o registro");
+        printf("\n 9. Programa de fidelidade");
+        printf("\n 10. Encerrar ");
+        printf("\n\n Digite sua opcao: ");
         scanf(" %d", &opcao);
         if (opcao >= 1 && opcao <= 10)
         {
-            // Envia a escolha do usuario para a funcao que a tratara
+
+            // Envia a escolha do usuario para a funcao tratar
             switchComandosInterface(opcao);
             printf("\n\n");
             system("pause");
@@ -1119,6 +1465,12 @@ main()
 
     // Salva os vetores em arquivos
     escreverVetores();
+
+    //
+
+    // Fim da funcao
+
+    //
 }
 
 //
