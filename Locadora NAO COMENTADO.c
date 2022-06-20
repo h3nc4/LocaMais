@@ -214,7 +214,7 @@ void addCliente()
     printf(" Rua: ");
     scanf(" %[^\n]", &p.endereco.rua);
     printf(" Nro: ");
-    scanf("%s", &p.endereco.numero);
+    scanf(" %[^\n]", &p.endereco.numero);
     printf(" Complemento: ");
     scanf(" %[^\n]", &p.endereco.complemento);
     printf(" Bairro: ");
@@ -222,11 +222,11 @@ void addCliente()
     printf(" Cidade: ");
     scanf(" %[^\n]", &p.endereco.cidade);
     printf(" Estado: ");
-    scanf("%s", &p.endereco.estado);
+    scanf(" %[^\n]", &p.endereco.estado);
     printf(" Cep: ");
-    scanf("%s", &p.endereco.cep);
+    scanf(" %[^\n]", &p.endereco.cep);
     geradorDeCodigoGlobal(p.codigo, 0);
-    printf(" Codigo:%s", p.codigo);
+    printf(" Codigo: %s", p.codigo);
     i = fimDeVetorGlobal(0);
     cliente[i] = p;
     strcpy(cliente[i + 1].nome, "EOF");
@@ -260,7 +260,7 @@ void addLog()
     while (verificadorDeVeiculo == 0)
     {
         printf("\n\n Digite o codigo do veiculo: ");
-        scanf("%s", &p.codigo.veiculo);
+        scanf(" %[^\n]", &p.codigo.veiculo);
         ponteiro = pesquisarPorCodigoVeiculo(p.codigo.veiculo);
         if (strcmp(veiculo[ponteiro].status, "Livre") == 0)
             verificadorDeVeiculo = 1;
@@ -331,7 +331,7 @@ void addVeiculo()
     printf(" Ocupacao: ");
     scanf(" %[^\n]", &p.hardware.ocupacao);
     printf(" Placa: ");
-    scanf("%s", &p.hardware.placa);
+    scanf(" %[^\n]", &p.hardware.placa);
     printf(" Valor da diaria: ");
     scanf(" %[^\n]", &p.diaria);
     printf(" Sua descricao: ");
@@ -360,7 +360,7 @@ void fidelidade()
     printf("\n******* Programa de fidelidade *******\n");
     char code[SIZE__CODE_ALL];
     printf("\n\n Informe o codigo do cliente:");
-    scanf("%s", &code);
+    scanf(" %[^\n]", &code);
     int total = printarContar(code) * 10;
     printf("\n Este cliente tem %d pontos", total);
     if (total >= 500)
