@@ -1,5 +1,7 @@
 //
 
+//
+
 /*****************  TRABALHO INTERDISCIPLINAR ENTRE FUNDAMENTOS DE ENGENHARIA DE SOFTWARE E AEDS I  *****************/
 
 //
@@ -28,6 +30,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/*************************************************************************************/
+
+//
+
 /*************** Definicoes ******************/
 
 // Definicoes de tamanhos para os vetores que carregam os arquivos
@@ -40,9 +46,15 @@
 
 #define SIZE__CODE_ALL 21
 
+/**********************************************/
+
+//
+
 /********** Meu contador global ***********/
 
 int i;
+
+/******************************************/
 
 //
 
@@ -542,7 +554,7 @@ void addCliente()
 
     // Sobre o numero da residencia
     printf(" Nro: ");
-    scanf("%s", &p.endereco.numero);
+    scanf(" %[^\n]", &p.endereco.numero);
 
     // Sobre o complemento
     printf(" Complemento: ");
@@ -558,17 +570,17 @@ void addCliente()
 
     // Sobre o estado, formato de dois caracteres
     printf(" Estado: ");
-    scanf("%s", &p.endereco.estado);
+    scanf(" %[^\n]", &p.endereco.estado);
 
     // Sobre o cep
     printf(" Cep: ");
-    scanf("%s", &p.endereco.cep);
+    scanf(" %[^\n]", &p.endereco.cep);
 
     /*********************** Fim dos inputs *********************/
 
     // Gera codigo do cliente
     geradorDeCodigoGlobal(p.codigo, 0);
-    printf(" Codigo:%s", p.codigo);
+    printf(" Codigo: %s", p.codigo);
 
     // Busca pelo ultimo ponteiro preenchido do vetor veiculo
     i = fimDeVetorGlobal(0);
@@ -680,7 +692,7 @@ void addLog()
 
         // Usuario digita o codigo do veiculo a ser alugado
         printf("\n\n Digite o codigo do veiculo: ");
-        scanf("%s", &p.codigo.veiculo);
+        scanf(" %[^\n]", &p.codigo.veiculo);
 
         // Verifica o status do veiculo desejado
         ponteiro = pesquisarPorCodigoVeiculo(p.codigo.veiculo);
@@ -858,7 +870,7 @@ void addVeiculo()
 
     // Sobre a placa
     printf(" Placa: ");
-    scanf("%s", &p.hardware.placa);
+    scanf(" %[^\n]", &p.hardware.placa);
 
     // Sobre o valor do veiculo
     printf(" Valor da diaria: ");
@@ -936,7 +948,7 @@ void fidelidade()
 
     // Usuario digita o codigo do cliente
     printf("\n\n Informe o codigo do cliente:");
-    scanf("%s", &code);
+    scanf(" %[^\n]", &code);
 
     // Envia o codigo para a funcao anterior, printanto locacoes do cliente e retornando o seu total
     int total = printarContar(code) * 10;
@@ -1247,7 +1259,7 @@ void carregaDadosDosArquivos()
 void escreverVetores()
 
 {
-    // Arquivo
+    // Arquivos
     FILE *pSalvarClientes = fopen("CLENTES.csv", "w"),
          *pSalvarLogLocacao = fopen("LOCACAO.csv", "w"),
          *pSalvarVeiculos = fopen("VEICULO.csv", "w");
@@ -1453,7 +1465,7 @@ main()
         printf("\n 10. Encerrar ");
         printf("\n\n Digite sua opcao: ");
         scanf(" %d", &opcao);
-        
+
         if (opcao >= 1 && opcao <= 10)
         {
 
@@ -1476,7 +1488,7 @@ main()
 
 //
 
-/****************************         FIM DA FUNCAO PRINCIPAL         ****************************/
+/******************************************************************************************/
 
 //
 
@@ -1497,6 +1509,8 @@ veiculo[k].descricao sempre recebera "EOF" ao final do arquivo e vetor veiculo
 
 //
 
-***********************************************************************************************************************/
+****************************************************************************************/
 
 //
+
+/**********************************************************************************************************************/
